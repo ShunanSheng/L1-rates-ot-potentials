@@ -1,0 +1,11 @@
+{
+  "d": 2,
+  "n": 32,
+  "B": 2,
+  "n_source": 512,
+  "seed": 2026,
+  "max_iter": 30,
+  "chunk_size": 2048,
+  "raw_path": "results_smoke/raw/trials_d=2_n=32_B=2_source=512_seed=2026.csv",
+  "runtime_seconds_total": 0.021944046020507812
+}

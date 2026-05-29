@@ -1,0 +1,14 @@
+name: ot-exp
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - numpy
+  - pandas
+  - scipy
+  - matplotlib
+  - ipykernel
+  - jupyterlab
+  - pip
+  - pip:
+      - -e .
