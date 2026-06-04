@@ -1,0 +1,11 @@
+{
+  "d": 4,
+  "n": 1000,
+  "B": 100,
+  "n_source": 10000,
+  "seed": 2026,
+  "max_iter": 1000,
+  "chunk_size": 2048,
+  "raw_path": "results/raw/trials_d=4_n=1000_B=100_source=10000_seed=2026.csv",
+  "runtime_seconds_total": 4012.832118034363
+}

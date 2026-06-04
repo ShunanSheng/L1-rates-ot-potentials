@@ -13,7 +13,7 @@ set -euo pipefail
 
 cd "${SLURM_SUBMIT_DIR}"
 
-mkdir -p logs results/raw results/summary results/figs
+mkdir -p logs results/raw results/metadata results/summary results/figs
 
 module load anaconda/3-2023.09
 
@@ -41,7 +41,7 @@ echo "Running new_d dimension d=${D}, task=${SLURM_ARRAY_TASK_ID}"
 
 python scripts/run_experiment.py \
   --d "$D" \
-  --n_target 100 300 1000 3000 10000\
+  --n_target 100 300 1000 3000 10000 \
   --B 100 \
   --n_source 10000 \
   --seed 2026 \
