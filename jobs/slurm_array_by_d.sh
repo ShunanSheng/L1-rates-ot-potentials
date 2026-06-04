@@ -24,7 +24,7 @@ export MKL_NUM_THREADS="${SLURM_CPUS_PER_TASK:-1}"
 
 if command -v conda >/dev/null 2>&1; then
   source "$(conda info --base)/etc/profile.d/conda.sh"
-  conda activate ot-exp
+  conda activate /burg-archive/home/ss6574/.conda/envs/ot-exp
 elif [ -f ".venv/bin/activate" ]; then
   source .venv/bin/activate
 else
@@ -32,7 +32,10 @@ else
   exit 1
 fi
 
+echo "Python executable: $(which python)"
+python -c "import sys; print('Python version:', sys.version)"
 python -m pip show otexp >/dev/null
+python -c "import otexp; print('otexp package:', otexp.__file__)"
 
 D_LIST=(2 3 4 6 8 10)
 D=${D_LIST[$SLURM_ARRAY_TASK_ID]}
