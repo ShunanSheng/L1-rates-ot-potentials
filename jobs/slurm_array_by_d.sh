@@ -5,8 +5,8 @@
 #SBATCH --output=logs/by_d%A_%a.out
 #SBATCH --error=logs/by_d_%A_%a.err
 #SBATCH -c 1
-#SBATCH --time=0-04:00
-#SBATCH --mem-per-cpu=8gb
+#SBATCH --time=0-22:00
+#SBATCH --mem-per-cpu=16gb
 #SBATCH --array=0-5
 
 set -euo pipefail
