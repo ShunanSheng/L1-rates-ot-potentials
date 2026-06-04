@@ -4,9 +4,11 @@ __pycache__/
 .DS_Store
 logs/*.out
 logs/*.err
-# results/raw/*.csv
+results/raw/*.csv
 results/metadata/*.json
 # results/summary/*.csv
 results/figs/*.png
+results/archive/
 results_notebook/
 results_medium/
+
