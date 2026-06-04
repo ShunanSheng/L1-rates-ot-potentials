@@ -43,7 +43,7 @@ def dual_obj_grad(theta, X, Y, chunk_size=2048):
     return obj, grad
 
 
-def solve_weights(X, Y, max_iter=180, chunk_size=2048, gtol=1e-6, ftol=1e-10):
+def solve_weights(X, Y, max_iter=1000, chunk_size=2048, gtol=1e-5, ftol=1e-10):
     """
     Solve for the semi-discrete dual weights h_i.
     """

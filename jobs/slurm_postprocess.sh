@@ -39,3 +39,12 @@ python scripts/plot_results.py \
   --summary_path results/summary/aggregated.csv \
   --raw_dir results/raw \
   --figdir results/figs
+
+# python scripts/aggregate.py \
+#   --raw_dir results_test/raw \
+#   --out_path results_test/summary/aggregated.csv
+
+# python scripts/plot_results_test.py \
+#   --summary_path results_test/summary/aggregated.csv \
+#   --raw_dir results_test/raw \
+#   --figdir results_test/figs

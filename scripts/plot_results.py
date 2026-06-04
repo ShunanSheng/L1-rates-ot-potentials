@@ -39,16 +39,10 @@ def _load_raw_dir(raw_dir: Path):
         return None
     return pd.concat([_read_raw_with_metadata(f) for f in files], ignore_index=True)
 
-
 def _log_beta_slope(n, d):
-    n = np.asarray(n, dtype=float)
-    beta = beta_rate(n, d)
-    valid = np.isfinite(n) & (n > 0) & np.isfinite(beta) & (beta > 0)
-    if valid.sum() < 2:
-        return np.nan
-    slope, _ = np.polyfit(np.log(n[valid]), np.log(beta[valid]), 1)
-    return float(slope)
-
+    if d in (1, 2, 3, 4):
+        return -0.5
+    return -2.0 / d
 
 def plot_results(summary_path, figdir, raw_dir=None, ncols=3):
     plt.rcParams.update({
@@ -138,10 +132,18 @@ def plot_results(summary_path, figdir, raw_dir=None, ncols=3):
             fit_y = np.exp(intercept) * n_line**slope
             ax.plot(n_line, fit_y, color="blue", label=rf"$\mathrm{{Best\ linear\ fit}},\ \mathrm{{slope}}={slope:.2f}$")
 
+            log_beta_slope = _log_beta_slope(n, int(d))
+            ax.plot(
+                [],
+                [],
+                color="red",
+                linestyle="--",
+                label=f"Reference, slope = {log_beta_slope:.2f}",
+            )
+
         ax.set_xscale("log")
         ax.set_yscale("log")
-        log_beta_slope = _log_beta_slope(n, int(d))
-        ax.set_title(rf"$d = {int(d)},\ \log(\beta(n,d))\ \mathrm{{slope}} = {log_beta_slope:.2f}$")
+        ax.set_title(rf"$d = {int(d)}$")
         ax.legend(fontsize=8)
 
     total = nrows * ncols
@@ -152,7 +154,7 @@ def plot_results(summary_path, figdir, raw_dir=None, ncols=3):
     fig.supylabel(r"$\mathrm{loss}$", fontsize=20)
     fig.tight_layout()
 
-    out_path = Path(figdir) / "loglog_ot_potential_unit_ball_grid.png"
+    out_path = Path(figdir) / "loglog_ot_potential_unit_ball_grid_reference_added.pdf"
     fig.savefig(out_path, dpi=200)
     plt.close(fig)
     print(f"Saved {out_path}")

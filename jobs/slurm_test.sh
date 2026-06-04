@@ -34,12 +34,12 @@ python -m pip show otexp >/dev/null
 
 python scripts/run_experiment.py \
   --d 2 \
-  --n_target 10 100 \
-  --B 10 \
-  --n_source 1000 \
+  --n_target 10 30 100 300 1000 3000\
+  --B 100 \
+  --n_source 5000 \
   --seed 2026 \
   --outdir results_test \
-  --max_iter 30
+  --max_iter 100
 
 python scripts/aggregate.py \
   --raw_dir results_test/raw \

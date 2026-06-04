@@ -2,3 +2,7 @@ numpy
 pandas
 matplotlib
 scipy
+
+[notebook]
+ipykernel
+jupyterlab
