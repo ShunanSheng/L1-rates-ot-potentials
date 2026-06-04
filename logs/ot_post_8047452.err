@@ -1,0 +1,15 @@
+/burg/opt/anaconda3-2023.09/lib/python3.11/site-packages/conda/base/context.py:201: FutureWarning: Adding 'defaults' to channel list implicitly is deprecated and will be removed in 25.3. 
+
+To remove this warning, please choose a default channel explicitly with conda's regular configuration system, e.g. by adding 'defaults' to the list of channels:
+
+  conda config --add channels defaults
+
+For more information see https://docs.conda.io/projects/conda/en/stable/user-guide/configuration/use-condarc.html
+
+  deprecated.topic(
+Traceback (most recent call last):
+  File "/burg-archive/home/ss6574/ot_experiment/scripts/aggregate.py", line 74, in <module>
+    aggregate(args.raw_dir, args.out_path)
+  File "/burg-archive/home/ss6574/ot_experiment/scripts/aggregate.py", line 41, in aggregate
+    raise FileNotFoundError(f"No trial CSV files found in {raw_dir}")
+FileNotFoundError: No trial CSV files found in results/raw

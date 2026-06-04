@@ -3,7 +3,7 @@ __pycache__/
 *.py[cod]
 .DS_Store
 logs/*.out
-logs/*.err
+# logs/*.err
 results/raw/*.csv
 results/metadata/*.json
 # results/summary/*.csv
