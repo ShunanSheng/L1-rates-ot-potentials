@@ -32,17 +32,19 @@ else
   exit 1
 fi
 
-echo "Python executable: $(which python)"
-python -c "import sys; print('Python version:', sys.version)"
-python -m pip show otexp >/dev/null
-python -c "import otexp; print('otexp package:', otexp.__file__)"
+PYTHON=/burg-archive/home/ss6574/.conda/envs/ot-exp/bin/python
+
+echo "Python executable: $PYTHON"
+"$PYTHON" -c "import sys; print('Python version:', sys.version)"
+"$PYTHON" -m pip show otexp >/dev/null
+"$PYTHON" -c "import otexp; print('otexp package:', otexp.__file__)"
 
 D_LIST=(2 3 4 6 8 10)
 D=${D_LIST[$SLURM_ARRAY_TASK_ID]}
 
 echo "Running new_d dimension d=${D}, task=${SLURM_ARRAY_TASK_ID}"
 
-python scripts/run_experiment.py \
+"$PYTHON" scripts/run_experiment.py \
   --d "$D" \
   --n_target 100 300 1000 3000 10000 \
   --B 100 \
