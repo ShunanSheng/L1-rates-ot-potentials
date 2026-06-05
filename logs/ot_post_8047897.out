@@ -1,0 +1,6 @@
+Saved aggregated summary to results_test/summary/aggregated.csv
+ d     n  mean_loss  std_loss   B     beta      se_loss  mean_loss_over_beta
+ 2    10   0.105630  0.042974 110 0.316228 4.097378e-03             0.334032
+ 2   100   0.034718  0.014954 110 0.100000 1.425817e-03             0.347185
+ 2  1000   0.002191  0.000702 110 0.031623 6.696560e-05             0.069301
+ 2 10000   0.000086  0.000003 110 0.010000 2.397302e-07             0.008606

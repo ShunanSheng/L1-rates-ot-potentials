@@ -15,6 +15,8 @@ def main():
     parser.add_argument("--use_qmc_source", action=argparse.BooleanOptionalAction, default=True)
     parser.add_argument("--max_iter", type=int, default=180)
     parser.add_argument("--chunk_size", type=int, default=2048)
+    parser.add_argument("--b_start", type=int, default=0)
+    parser.add_argument("--b_stop", type=int, default=None)
     parser.add_argument("--overwrite", action="store_true")
     args = parser.parse_args()
 
@@ -29,6 +31,8 @@ def main():
         outdir=args.outdir,
         max_iter=args.max_iter,
         chunk_size=args.chunk_size,
+        b_start=args.b_start,
+        b_stop=args.b_stop,
         overwrite=args.overwrite,
     )
 

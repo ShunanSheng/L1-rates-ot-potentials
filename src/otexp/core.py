@@ -123,6 +123,8 @@ def one_trial(
         "status": int(res.status),
         "message": str(res.message),
         "nit": int(res.nit),
+        "nfev": int(res.nfev),
+        "njev": int(res.njev),
         "fun": float(res.fun),
         "grad_inf": float(np.max(np.abs(res.jac))),
     }
