@@ -1,5 +1,6 @@
 from pathlib import Path
 import json
+import tempfile
 import pandas as pd
 
 
@@ -12,8 +13,17 @@ def ensure_dir(path):
 def save_csv_atomic(df: pd.DataFrame, path):
     path = Path(path)
     ensure_dir(path.parent)
-    tmp_path = path.with_suffix(path.suffix + ".tmp")
-    df.to_csv(tmp_path, index=False)
+    with tempfile.NamedTemporaryFile(
+        mode="w",
+        encoding="utf-8",
+        newline="",
+        dir=path.parent,
+        prefix=f".{path.name}.",
+        suffix=".tmp",
+        delete=False,
+    ) as tmp:
+        tmp_path = Path(tmp.name)
+        df.to_csv(tmp, index=False)
     tmp_path.replace(path)
 
 

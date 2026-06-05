@@ -183,10 +183,10 @@ Monitor it with:
 
 ```bash
 squeue -u "$USER"
-tail -n 60 logs/ot_by_pair_<ARRAY_JOBID>_<TASKID>.out
+tail -n 60 logs/ot_pair_<ARRAY_JOBID>_<TASKID>.out
 ```
 
-To rerun only one failed `(d,n)` pair, resubmit the matching array index. For example, task `0` is `(d=2,n=256)` and task `19` is `(d=10,n=4096)`:
+To rerun only one failed `(d,n)` pair, resubmit the matching array index. For example, task `0` is `(d=2,n=100)` and task `29` is `(d=10,n=10000)`:
 
 ```bash
 sbatch --array=0 jobs/slurm_array_by_pair.sh
