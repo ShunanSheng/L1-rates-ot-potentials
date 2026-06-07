@@ -138,7 +138,7 @@ def plot_results(summary_path, figdir, raw_dir=None, ncols=3):
                 [],
                 color="red",
                 linestyle="--",
-                label=f"Reference, slope = {log_beta_slope:.2f}",
+                label=f"Reference slope = {log_beta_slope:.2f}",
             )
 
         ax.set_xscale("log")

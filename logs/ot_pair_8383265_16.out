@@ -1,0 +1,11 @@
+Python executable: /burg-archive/home/ss6574/.conda/envs/ot-exp/bin/python
+Python version: 3.11.15 | packaged by conda-forge | (main, Mar  5 2026, 16:45:40) [GCC 14.3.0]
+otexp package: /burg-archive/home/ss6574/L1-rates-ot-potentials/src/otexp/__init__.py
+Running pair task=16: d=6, n=300, B=100
+
+ Summary:
+ d   n   B  mean_loss  std_loss  se_loss     beta  mean_loss_over_beta
+ 6 300 100   0.033608   0.00215 0.000215 4.859805             0.006915
+
+Empirical log-log slope for mean loss: nan
+Log-log slope of beta(n,6): nan

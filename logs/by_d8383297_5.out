@@ -1,0 +1,61 @@
+Python executable: /burg-archive/home/ss6574/.conda/envs/ot-exp/bin/python
+Python version: 3.11.15 | packaged by conda-forge | (main, Mar  5 2026, 16:45:40) [GCC 14.3.0]
+otexp package: /burg-archive/home/ss6574/L1-rates-ot-potentials/src/otexp/__init__.py
+Running new_d dimension d=10, task=5
+[resume] d=10, n=10000, b=[0, 100): found 55/100 completed trials
+[trial] d=10, n=10000, b=56/100, runtime=874.82s, success=False, nit=1000, nfev=1002
+[trial] d=10, n=10000, b=57/100, runtime=762.25s, success=True, nit=872, nfev=873
+[trial] d=10, n=10000, b=58/100, runtime=873.44s, success=False, nit=1000, nfev=1001
+[trial] d=10, n=10000, b=59/100, runtime=873.86s, success=False, nit=1000, nfev=1001
+[trial] d=10, n=10000, b=60/100, runtime=875.70s, success=False, nit=1000, nfev=1003
+[trial] d=10, n=10000, b=61/100, runtime=873.57s, success=False, nit=1000, nfev=1001
+[trial] d=10, n=10000, b=62/100, runtime=873.21s, success=False, nit=1000, nfev=1001
+[trial] d=10, n=10000, b=63/100, runtime=872.92s, success=False, nit=1000, nfev=1001
+[trial] d=10, n=10000, b=64/100, runtime=671.49s, success=True, nit=768, nfev=769
+[trial] d=10, n=10000, b=65/100, runtime=722.67s, success=True, nit=827, nfev=828
+[trial] d=10, n=10000, b=66/100, runtime=855.06s, success=False, nit=1000, nfev=1002
+[trial] d=10, n=10000, b=67/100, runtime=719.70s, success=True, nit=824, nfev=825
+[trial] d=10, n=10000, b=68/100, runtime=874.00s, success=False, nit=1000, nfev=1001
+[trial] d=10, n=10000, b=69/100, runtime=769.97s, success=True, nit=880, nfev=882
+[trial] d=10, n=10000, b=70/100, runtime=873.92s, success=False, nit=1000, nfev=1001
+[trial] d=10, n=10000, b=71/100, runtime=853.92s, success=False, nit=1000, nfev=1001
+[trial] d=10, n=10000, b=72/100, runtime=682.16s, success=True, nit=798, nfev=799
+[trial] d=10, n=10000, b=73/100, runtime=825.22s, success=True, nit=966, nfev=967
+[trial] d=10, n=10000, b=74/100, runtime=854.54s, success=False, nit=1000, nfev=1001
+[trial] d=10, n=10000, b=75/100, runtime=855.48s, success=False, nit=1000, nfev=1002
+[trial] d=10, n=10000, b=76/100, runtime=851.14s, success=True, nit=992, nfev=997
+[trial] d=10, n=10000, b=77/100, runtime=854.25s, success=False, nit=1000, nfev=1001
+[trial] d=10, n=10000, b=78/100, runtime=853.96s, success=False, nit=1000, nfev=1001
+[trial] d=10, n=10000, b=79/100, runtime=853.15s, success=False, nit=1000, nfev=1001
+[trial] d=10, n=10000, b=80/100, runtime=765.05s, success=True, nit=895, nfev=896
+[trial] d=10, n=10000, b=81/100, runtime=788.82s, success=True, nit=899, nfev=903
+[trial] d=10, n=10000, b=82/100, runtime=747.46s, success=True, nit=867, nfev=868
+[trial] d=10, n=10000, b=83/100, runtime=868.54s, success=False, nit=1000, nfev=1001
+[trial] d=10, n=10000, b=84/100, runtime=883.49s, success=False, nit=1000, nfev=1001
+[trial] d=10, n=10000, b=85/100, runtime=888.93s, success=False, nit=1000, nfev=1002
+[trial] d=10, n=10000, b=86/100, runtime=749.75s, success=True, nit=866, nfev=867
+[trial] d=10, n=10000, b=87/100, runtime=864.39s, success=False, nit=1000, nfev=1001
+[trial] d=10, n=10000, b=88/100, runtime=635.34s, success=True, nit=740, nfev=741
+[trial] d=10, n=10000, b=89/100, runtime=624.45s, success=True, nit=729, nfev=730
+[trial] d=10, n=10000, b=90/100, runtime=856.87s, success=False, nit=1000, nfev=1001
+[trial] d=10, n=10000, b=91/100, runtime=858.59s, success=False, nit=1000, nfev=1002
+[trial] d=10, n=10000, b=92/100, runtime=857.24s, success=False, nit=1000, nfev=1003
+[trial] d=10, n=10000, b=93/100, runtime=679.72s, success=True, nit=794, nfev=795
+[trial] d=10, n=10000, b=94/100, runtime=923.82s, success=False, nit=1000, nfev=1003
+[trial] d=10, n=10000, b=95/100, runtime=914.18s, success=False, nit=1000, nfev=1001
+[trial] d=10, n=10000, b=96/100, runtime=839.87s, success=True, nit=921, nfev=923
+[trial] d=10, n=10000, b=97/100, runtime=909.69s, success=False, nit=1000, nfev=1001
+[trial] d=10, n=10000, b=98/100, runtime=889.61s, success=False, nit=1000, nfev=1002
+[trial] d=10, n=10000, b=99/100, runtime=850.45s, success=False, nit=1000, nfev=1001
+[trial] d=10, n=10000, b=100/100, runtime=779.24s, success=True, nit=857, nfev=858
+
+ Summary:
+ d     n   B  mean_loss  std_loss  se_loss       beta  mean_loss_over_beta
+10   100 100   0.058923  0.002017 0.000202  38.880967             0.001515
+10   300 100   0.043845  0.000813 0.000081  59.301354             0.000739
+10  1000 100   0.032402  0.000496 0.000050  82.796281             0.000391
+10  3000 100   0.025179  0.000221 0.000022 103.486172             0.000243
+10 10000 100   0.017814  0.000165 0.000017 123.830333             0.000144
+
+Empirical log-log slope for mean loss: -0.256
+Log-log slope of beta(n,10): 0.249
