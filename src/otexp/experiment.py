@@ -300,6 +300,10 @@ def run_gof_experiment(
     B=100,
     n_eval=100,
     alpha=0.05,
+    location_thetas=(0.1, 0.25, 0.5),
+    scale_thetas=(0.1, 0.25, 0.5),
+    mixture_thetas=(0.1, 0.25, 0.5),
+    mixture_shift=0.5,
     n_source=4096,
     seed=2026,
     use_qmc_source=True,
@@ -316,6 +320,12 @@ def run_gof_experiment(
         T_n = sqrt(n) || phi_hat_n - ||.||^2/2
               - med(phi_hat_n - ||.||^2/2) ||_{L1(mu0)}.
 
+    Power is evaluated for three alternatives:
+
+    - location_shift: Y = X + theta e_1
+    - scale: Y = (1 + theta) X
+    - mixture_contamination: Y ~ (1 - theta) mu0 + theta Law(X + mixture_shift e_1)
+
     Parameters
     ----------
     B:
@@ -323,10 +333,13 @@ def run_gof_experiment(
     n_eval:
         Number of fresh null and alternative samples used to estimate type I
         error and power after calibration.
+    location_thetas, scale_thetas, mixture_thetas:
+        Alternative strengths to evaluate. theta=0 recovers the null; it is
+        allowed, but the separate "null" scenario is the empirical size.
     Returns
     -------
     summary_df, null_df, sim_df:
-        summary_df contains the estimated type I error and power. null_df
+        summary_df contains the empirical size and power estimates. null_df
         contains the calibration replicates. sim_df contains the fresh null and
         alternative evaluation replicates.
     """
@@ -386,6 +399,13 @@ def run_gof_experiment(
     null_T = null_df.loc[null_df["T"].notna(), "T"].to_numpy()
     critical_value = _empirical_critical_value(null_T, alpha)
 
+    alternatives = _gof_alternative_specs(
+        location_thetas=location_thetas,
+        scale_thetas=scale_thetas,
+        mixture_thetas=mixture_thetas,
+        mixture_shift=mixture_shift,
+    )
+
     sim_rows = []
     for r in range(n_eval):
         null_seed = seed + 300_000 + r
@@ -396,6 +416,8 @@ def run_gof_experiment(
             out = statistic(Y)
             sim_rows.append({
                 "scenario": "null",
+                "alternative": "null",
+                "theta": 0.0,
                 "replicate": r,
                 "seed": null_seed,
                 "reject": bool(out["T"] > critical_value),
@@ -405,35 +427,60 @@ def run_gof_experiment(
                 "error_message": "",
             })
         except Exception as exc:
-            sim_rows.append(_gof_error_row("null", r, null_seed, start_time, exc, critical_value=critical_value))
+            sim_rows.append(_gof_error_row(
+                "null",
+                r,
+                null_seed,
+                start_time,
+                exc,
+                critical_value=critical_value,
+                alternative="null",
+                theta=0.0,
+            ))
 
-        alt_seed = seed + 400_000 + r
-        alt_rng = np.random.default_rng(alt_seed)
-        start_time = time.time()
-        try:
-            Y = _sample_center_biased_ball(n, d, alt_rng)
-            out = statistic(Y)
-            sim_rows.append({
-                "scenario": "alternative",
-                "replicate": r,
-                "seed": alt_seed,
-                "reject": bool(out["T"] > critical_value),
-                **out,
-                "critical_value": critical_value,
-                "runtime_seconds": time.time() - start_time,
-                "error_message": "",
-            })
-        except Exception as exc:
-            sim_rows.append(_gof_error_row("alternative", r, alt_seed, start_time, exc, critical_value=critical_value))
+        for alt_index, spec in enumerate(alternatives):
+            alt_seed = seed + 400_000 + r * max(1, len(alternatives)) + alt_index
+            alt_rng = np.random.default_rng(alt_seed)
+            start_time = time.time()
+            try:
+                Y = _sample_gof_alternative(n, d, alt_rng, spec)
+                out = statistic(Y)
+                sim_rows.append({
+                    "scenario": spec["scenario"],
+                    "alternative": spec["alternative"],
+                    "theta": spec["theta"],
+                    "replicate": r,
+                    "seed": alt_seed,
+                    "reject": bool(out["T"] > critical_value),
+                    **out,
+                    "critical_value": critical_value,
+                    "runtime_seconds": time.time() - start_time,
+                    "error_message": "",
+                })
+            except Exception as exc:
+                sim_rows.append(_gof_error_row(
+                    spec["scenario"],
+                    r,
+                    alt_seed,
+                    start_time,
+                    exc,
+                    critical_value=critical_value,
+                    alternative=spec["alternative"],
+                    theta=spec["theta"],
+                ))
 
     sim_df = pd.DataFrame(sim_rows)
     summary_rows = []
-    for scenario, group in sim_df.groupby("scenario", sort=False):
+    group_cols = ["scenario", "alternative", "theta"]
+    for keys, group in sim_df.groupby(group_cols, sort=False, dropna=False):
+        scenario, alternative, theta = keys
         reject = group["reject"].dropna().astype(bool)
         estimate = float(reject.mean()) if len(reject) else np.nan
         summary_rows.append({
-            "quantity": "type I error" if scenario == "null" else "power",
+            "quantity": "empirical size" if scenario == "null" else "empirical power",
             "scenario": scenario,
+            "alternative": alternative,
+            "theta": float(theta),
             "estimate": estimate,
             "mc_se": float(np.sqrt(estimate * (1.0 - estimate) / len(reject))) if len(reject) else np.nan,
             "n_eval": int(len(reject)),
@@ -450,6 +497,63 @@ def run_gof_experiment(
     return summary_df, null_df, sim_df
 
 
+def _gof_alternative_specs(
+    *,
+    location_thetas,
+    scale_thetas,
+    mixture_thetas,
+    mixture_shift,
+):
+    specs = []
+    for theta in location_thetas:
+        specs.append({
+            "scenario": "location_shift",
+            "alternative": "Y = X + theta e1",
+            "theta": float(theta),
+        })
+    for theta in scale_thetas:
+        specs.append({
+            "scenario": "scale",
+            "alternative": "Y = (1 + theta) X",
+            "theta": float(theta),
+        })
+    for theta in mixture_thetas:
+        theta = float(theta)
+        if not 0.0 <= theta <= 1.0:
+            raise ValueError(f"Mixture theta must be in [0, 1], got {theta}")
+        specs.append({
+            "scenario": "mixture_contamination",
+            "alternative": f"(1 - theta) mu0 + theta Law(X + {mixture_shift} e1)",
+            "theta": theta,
+            "mixture_shift": float(mixture_shift),
+        })
+    return specs
+
+
+def _sample_gof_alternative(n, d, rng, spec):
+    X = sample_mu(n, d, rng=rng, use_qmc=False)
+    e1 = np.zeros(d)
+    e1[0] = 1.0
+    theta = spec["theta"]
+
+    if spec["scenario"] == "location_shift":
+        return X + theta * e1
+
+    if spec["scenario"] == "scale":
+        if 1.0 + theta <= 0.0:
+            raise ValueError(f"Scale theta must satisfy 1 + theta > 0, got {theta}")
+        return (1.0 + theta) * X
+
+    if spec["scenario"] == "mixture_contamination":
+        shifted = X + spec["mixture_shift"] * e1
+        use_shifted = rng.random(n) < theta
+        Y = X.copy()
+        Y[use_shifted] = shifted[use_shifted]
+        return Y
+
+    raise ValueError(f"Unknown GOF alternative scenario: {spec['scenario']}")
+
+
 def _empirical_critical_value(values, alpha):
     values = np.sort(np.asarray(values, dtype=float))
     if len(values) == 0:
@@ -458,16 +562,20 @@ def _empirical_critical_value(values, alpha):
     return float(values[np.clip(idx, 0, len(values) - 1)])
 
 
-def _sample_center_biased_ball(n, d, rng):
-    Z = rng.normal(size=(n, d))
-    Z /= np.linalg.norm(Z, axis=1, keepdims=True)
-    radii = rng.random(n) ** (2.0 / d)
-    return radii[:, None] * Z
-
-
-def _gof_error_row(scenario, replicate, seed, start_time, exc, critical_value=np.nan):
+def _gof_error_row(
+    scenario,
+    replicate,
+    seed,
+    start_time,
+    exc,
+    critical_value=np.nan,
+    alternative=np.nan,
+    theta=np.nan,
+):
     return {
         "scenario": scenario,
+        "alternative": alternative,
+        "theta": theta,
         "replicate": replicate,
         "seed": seed,
         "reject": np.nan,
