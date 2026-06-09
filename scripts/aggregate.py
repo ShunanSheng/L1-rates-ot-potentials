@@ -10,7 +10,7 @@ from otexp.io import ensure_dir, save_csv_atomic
 
 
 RAW_FILENAME_RE = re.compile(
-    r"^trials_d=(?P<d>\d+)_n=(?P<n>\d+)_B=(?P<B>\d+)_source=(?P<n_source>\d+)_seed=(?P<seed>\d+)\.csv$"
+    r"^trials_d=(?P<d>\d+)_n=(?P<n>\d+)_B=(?P<B>\d+)_source=(?P<n_source>\d+)_seed=(?P<seed>\d+)(?:_split_eval)?\.csv$"
 )
 
 
@@ -35,10 +35,14 @@ def _read_raw_with_metadata(path: Path) -> pd.DataFrame:
 
 def aggregate(raw_dir, out_path):
     raw_dir = Path(raw_dir)
-    files = sorted(raw_dir.glob("trials_*.csv"))
+    split_files = sorted(raw_dir.glob("trials_*_split_eval.csv"))
+    files = split_files if split_files else sorted(raw_dir.glob("trials_*.csv"))
 
     if not files:
         raise FileNotFoundError(f"No trial CSV files found in {raw_dir}")
+
+    if split_files:
+        print(f"Using {len(split_files)} split-evaluation trial CSV files from {raw_dir}")
 
     raw = pd.concat([_read_raw_with_metadata(f) for f in files], ignore_index=True)
 

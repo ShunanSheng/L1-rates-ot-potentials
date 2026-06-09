@@ -34,7 +34,7 @@ python -m pip show otexp >/dev/null
 
 python scripts/run_experiment.py \
   --d 2 \
-  --n_target 10 30 100 300 1000 3000\
+  --n_target 10 30 100 300\
   --B 100 \
   --n_source 5000 \
   --seed 2026 \

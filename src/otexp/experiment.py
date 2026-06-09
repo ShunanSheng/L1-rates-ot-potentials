@@ -11,24 +11,24 @@ from .io import ensure_dir, save_csv_atomic, save_json
 
 
 def _raw_filename(d, n, B, n_source, seed):
-    return f"trials_d={d}_n={n}_B={B}_source={n_source}_seed={seed}.csv"
+    return f"trials_d={d}_n={n}_B={B}_source={n_source}_seed={seed}_split_eval.csv"
 
 
 def _raw_shard_filename(d, n, B, n_source, seed, b_start, b_stop):
     return (
         f"trials_d={d}_n={n}_B={B}_source={n_source}_seed={seed}"
-        f"_b={b_start}-{b_stop}.csv"
+        f"_split_eval_b={b_start}-{b_stop}.csv"
     )
 
 
 def _summary_filename(d, B, n_source, seed):
-    return f"summary_d={d}_B={B}_source={n_source}_seed={seed}.csv"
+    return f"summary_d={d}_B={B}_source={n_source}_seed={seed}_split_eval.csv"
 
 
 def _summary_shard_filename(d, n, B, n_source, seed, b_start, b_stop):
     return (
         f"summary_d={d}_n={n}_B={B}_source={n_source}_seed={seed}"
-        f"_b={b_start}-{b_stop}.csv"
+        f"_split_eval_b={b_start}-{b_stop}.csv"
     )
 
 
@@ -37,10 +37,13 @@ def run_one_n(
     d,
     n,
     B,
-    X_source,
+    X_solve,
+    X_eval,
     seed,
     outdir,
     n_source,
+    source_solve_seed=None,
+    source_eval_seed=None,
     max_iter=180,
     chunk_size=2048,
     b_start=0,
@@ -107,7 +110,8 @@ def run_one_n(
                 out = one_trial(
                     n=n,
                     d=d,
-                    X_source=X_source,
+                    X_solve=X_solve,
+                    X_eval=X_eval,
                     rng=trial_rng,
                     max_iter=max_iter,
                     chunk_size=chunk_size,
@@ -171,6 +175,9 @@ def run_one_n(
                 "n": n,
                 "B": B,
                 "n_source": n_source,
+                "source_solve_seed": source_solve_seed,
+                "source_eval_seed": source_eval_seed,
+                "source_clouds": "independent_solve_and_eval",
                 "seed": seed,
                 "max_iter": max_iter,
                 "chunk_size": chunk_size,
@@ -231,6 +238,9 @@ def run_ball_experiment(
 ):
     """
     Run the unit-ball experiment for one dimension d and several n values.
+
+    The semi-discrete OT weights are solved on one source cloud and the
+    L1(mu) loss is evaluated on an independent source cloud of the same size.
     """
     if b_stop is None:
         b_stop = B
@@ -241,12 +251,22 @@ def run_ball_experiment(
         ensure_dir(outdir / ("raw_shards" if is_shard else "raw"))
         ensure_dir(outdir / ("summary_shards" if is_shard else "summary"))
 
-    rng = np.random.default_rng(seed)
-    X_source = sample_mu(
+    rng_solve = np.random.default_rng(seed)
+    rng_eval = np.random.default_rng(seed + 1)
+    source_solve_seed = seed + 1000 * d
+    source_eval_seed = seed + 2000 * d
+    X_solve = sample_mu(
         n_source,
         d,
-        rng=rng,
-        seed=seed + 1000 * d,
+        rng=rng_solve,
+        seed=source_solve_seed,
+        use_qmc=use_qmc_source,
+    )
+    X_eval = sample_mu(
+        n_source,
+        d,
+        rng=rng_eval,
+        seed=source_eval_seed,
         use_qmc=use_qmc_source,
     )
 
@@ -257,10 +277,13 @@ def run_ball_experiment(
             d=d,
             n=int(n),
             B=B,
-            X_source=X_source,
+            X_solve=X_solve,
+            X_eval=X_eval,
             seed=seed,
             outdir=outdir,
             n_source=n_source,
+            source_solve_seed=source_solve_seed,
+            source_eval_seed=source_eval_seed,
             max_iter=max_iter,
             chunk_size=chunk_size,
             b_start=b_start,
@@ -315,6 +338,10 @@ def run_gof_experiment(
     """
     Run a Monte Carlo goodness-of-fit experiment on the unit ball.
 
+    The semi-discrete OT weights are solved on one source cloud and the
+    L1(mu0) statistic is evaluated on an independent source cloud of the same
+    size.
+
     The null is H0: nu = mu0, where mu0 is Unif(B_d). The statistic is
 
         T_n = sqrt(n) || phi_hat_n - ||.||^2/2
@@ -343,27 +370,37 @@ def run_gof_experiment(
         contains the calibration replicates. sim_df contains the fresh null and
         alternative evaluation replicates.
     """
-    rng = np.random.default_rng(seed)
-    X_source = sample_mu(
+    rng_solve = np.random.default_rng(seed)
+    rng_eval = np.random.default_rng(seed + 1)
+    source_solve_seed = seed + 1000 * d
+    source_eval_seed = seed + 2000 * d
+    X_solve = sample_mu(
         n_source,
         d,
-        rng=rng,
-        seed=seed + 1000 * d,
+        rng=rng_solve,
+        seed=source_solve_seed,
         use_qmc=use_qmc_source,
     )
-    phi_source = phi_true(X_source)
+    X_eval = sample_mu(
+        n_source,
+        d,
+        rng=rng_eval,
+        seed=source_eval_seed,
+        use_qmc=use_qmc_source,
+    )
+    phi_eval = phi_true(X_eval)
 
     def statistic(Y):
         h, res = solve_weights(
-            X_source,
+            X_solve,
             Y,
             max_iter=max_iter,
             chunk_size=chunk_size,
             gtol=gtol,
             ftol=ftol,
         )
-        phi_hat = evaluate_phi_hat(X_source, Y, h, chunk_size=chunk_size)
-        diff = phi_hat - phi_source
+        phi_hat = evaluate_phi_hat(X_eval, Y, h, chunk_size=chunk_size)
+        diff = phi_hat - phi_eval
         centered_l1 = float(np.mean(np.abs(diff - np.median(diff))))
         return {
             "T": float(np.sqrt(Y.shape[0]) * centered_l1),
@@ -491,6 +528,9 @@ def run_gof_experiment(
             "median_T": float(group["T"].median()),
             "success_rate": float(group["success"].mean()),
             "error_rate": float(group["error_message"].astype(bool).mean()),
+            "source_clouds": "independent_solve_and_eval",
+            "source_solve_seed": source_solve_seed,
+            "source_eval_seed": source_eval_seed,
         })
 
     summary_df = pd.DataFrame(summary_rows)

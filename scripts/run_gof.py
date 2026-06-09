@@ -82,7 +82,7 @@ def main():
     ])
     stem = (
         f"gof_d={args.d}_n={args.n}_B={args.B}_eval={args.n_eval}"
-        f"_source={args.n_source}_seed={args.seed}_{theta_stem}"
+        f"_source={args.n_source}_seed={args.seed}_split_eval_{theta_stem}"
     )
 
     summary_path = summary_dir / f"summary_{stem}.csv"

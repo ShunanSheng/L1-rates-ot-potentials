@@ -86,10 +86,11 @@ def evaluate_phi_hat(X, Y, h, chunk_size=2048):
 def one_trial(
     n,
     d,
-    X_source,
-    rng,
+    X_solve,
+    rng=None,
     max_iter=180,
     chunk_size=2048,
+    X_eval=None,
 ):
     """
     One Monte Carlo repetition.
@@ -100,16 +101,19 @@ def one_trial(
 
     with mu = Unif(B_d), phi(x)=0.5||x||^2.
     """
+    if X_eval is None:
+        X_eval = X_solve
+
     Y = sample_nu(n, d, rng)
     h, res = solve_weights(
-        X_source,
+        X_solve,
         Y,
         max_iter=max_iter,
         chunk_size=chunk_size,
     )
 
-    phi_hat = evaluate_phi_hat(X_source, Y, h, chunk_size=chunk_size)
-    phi = phi_true(X_source)
+    phi_hat = evaluate_phi_hat(X_eval, Y, h, chunk_size=chunk_size)
+    phi = phi_true(X_eval)
 
     diff = phi_hat - phi
 
