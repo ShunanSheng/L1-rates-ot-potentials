@@ -10,7 +10,7 @@
 #SBATCH --output=logs/ot_gof_%j.out
 #SBATCH --error=logs/ot_gof_%j.err
 #SBATCH -c 1
-#SBATCH --time=0-23:00
+#SBATCH --time=1-00:00
 #SBATCH --mem-per-cpu=16gb
 
 set -euo pipefail
@@ -38,14 +38,14 @@ fi
 
 PYTHON="${PYTHON:-$(command -v python)}"
 
-GOF_D="${GOF_D:-2}"
-GOF_N="${GOF_N:-32}"
-GOF_B="${GOF_B:-100}"
+GOF_D="${GOF_D:-3}"
+GOF_N="${GOF_N:-1000}"
+GOF_B="${GOF_B:-1000}"
 GOF_N_EVAL="${GOF_N_EVAL:-100}"
-GOF_N_SOURCE="${GOF_N_SOURCE:-4096}"
+GOF_N_SOURCE="${GOF_N_SOURCE:-5000}"
 GOF_SEED="${GOF_SEED:-2026}"
-GOF_MAX_ITER="${GOF_MAX_ITER:-180}"
-GOF_CHUNK_SIZE="${GOF_CHUNK_SIZE:-2048}"
+GOF_MAX_ITER="${GOF_MAX_ITER:-200}"
+GOF_CHUNK_SIZE="${GOF_CHUNK_SIZE:-2500}"
 GOF_OUTDIR="${GOF_OUTDIR:-results_gof}"
 
 echo "Python executable: $PYTHON"

@@ -1,0 +1,21 @@
+Python executable: /burg-archive/home/ss6574/.conda/envs/ot-exp/bin/python
+Python version: 3.11.15 | packaged by conda-forge | (main, Mar  5 2026, 16:45:40) [GCC 14.3.0]
+otexp package: /burg-archive/home/ss6574/L1-rates-ot-potentials/src/otexp/__init__.py
+Running GOF: d=3, n=1000, B=1000, n_eval=100, n_source=5000
+
+Goodness-of-fit summary:
+       quantity              scenario                             alternative  theta  estimate    mc_se  n_eval  alpha  critical_value  calibration_B   mean_T  median_T  success_rate  error_rate
+ empirical size                  null                                    null   0.00      0.07 0.025515     100   0.05        0.587476           1000 0.419419  0.410852           0.0         0.0
+empirical power        location_shift                        Y = X + theta e1   0.10      1.00 0.000000     100   0.05        0.587476           1000 1.237334  1.224856           0.0         0.0
+empirical power        location_shift                        Y = X + theta e1   0.25      1.00 0.000000     100   0.05        0.587476           1000 3.024311  3.018886           0.0         0.0
+empirical power        location_shift                        Y = X + theta e1   0.50      1.00 0.000000     100   0.05        0.587476           1000 5.940841  5.955361           0.0         0.0
+empirical power                 scale                       Y = (1 + theta) X   0.10      0.27 0.044396     100   0.05        0.587476           1000 0.560156  0.541635           0.0         0.0
+empirical power                 scale                       Y = (1 + theta) X   0.25      1.00 0.000000     100   0.05        0.587476           1000 1.010298  1.010561           0.0         0.0
+empirical power                 scale                       Y = (1 + theta) X   0.50      1.00 0.000000     100   0.05        0.587476           1000 1.821858  1.815223           0.0         0.0
+empirical power mixture_contamination (1 - theta) mu0 + theta Law(X + 0.5 e1)   0.10      0.72 0.044900     100   0.05        0.587476           1000 0.696147  0.684873           0.0         0.0
+empirical power mixture_contamination (1 - theta) mu0 + theta Law(X + 0.5 e1)   0.25      1.00 0.000000     100   0.05        0.587476           1000 1.486007  1.480131           0.0         0.0
+empirical power mixture_contamination (1 - theta) mu0 + theta Law(X + 0.5 e1)   0.50      1.00 0.000000     100   0.05        0.587476           1000 2.973381  2.968975           0.0         0.0
+
+Saved summary to results_gof/summary/summary_gof_d=3_n=1000_B=1000_eval=100_source=5000_seed=2026.csv
+Saved calibration null replicates to results_gof/raw/calibration_null_gof_d=3_n=1000_B=1000_eval=100_source=5000_seed=2026.csv
+Saved simulation replicates to results_gof/raw/simulation_gof_d=3_n=1000_B=1000_eval=100_source=5000_seed=2026.csv
