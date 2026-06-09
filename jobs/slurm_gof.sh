@@ -10,7 +10,7 @@
 #SBATCH --output=logs/ot_gof_%j.out
 #SBATCH --error=logs/ot_gof_%j.err
 #SBATCH -c 1
-#SBATCH --time=1-00:00
+#SBATCH --time=2-00:00
 #SBATCH --mem-per-cpu=16gb
 
 set -euo pipefail
