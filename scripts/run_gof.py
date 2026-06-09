@@ -13,6 +13,15 @@ def _float_tuple(values):
     return tuple(float(value) for value in values)
 
 
+def _format_number_for_filename(value):
+    text = f"{float(value):g}"
+    return text.replace("-", "m").replace(".", "p")
+
+
+def _theta_label(prefix, values):
+    return f"{prefix}=" + "-".join(_format_number_for_filename(value) for value in values)
+
+
 def main():
     parser = argparse.ArgumentParser(
         description="Run a goodness-of-fit experiment for the unit ball."
@@ -39,15 +48,19 @@ def main():
     from otexp.experiment import run_gof_experiment
     from otexp.io import ensure_dir, save_csv_atomic
 
+    location_thetas = _float_tuple(args.location_thetas)
+    scale_thetas = _float_tuple(args.scale_thetas)
+    mixture_thetas = _float_tuple(args.mixture_thetas)
+
     summary_df, calibration_null_df, sim_df = run_gof_experiment(
         d=args.d,
         n=args.n,
         B=args.B,
         n_eval=args.n_eval,
         alpha=args.alpha,
-        location_thetas=_float_tuple(args.location_thetas),
-        scale_thetas=_float_tuple(args.scale_thetas),
-        mixture_thetas=_float_tuple(args.mixture_thetas),
+        location_thetas=location_thetas,
+        scale_thetas=scale_thetas,
+        mixture_thetas=mixture_thetas,
         mixture_shift=args.mixture_shift,
         n_source=args.n_source,
         seed=args.seed,
@@ -61,7 +74,16 @@ def main():
     outdir = Path(args.outdir)
     summary_dir = ensure_dir(outdir / "summary")
     raw_dir = ensure_dir(outdir / "raw")
-    stem = f"gof_d={args.d}_n={args.n}_B={args.B}_eval={args.n_eval}_source={args.n_source}_seed={args.seed}"
+    theta_stem = "_".join([
+        _theta_label("loc", location_thetas),
+        _theta_label("scale", scale_thetas),
+        _theta_label("mix", mixture_thetas),
+        f"mixshift={_format_number_for_filename(args.mixture_shift)}",
+    ])
+    stem = (
+        f"gof_d={args.d}_n={args.n}_B={args.B}_eval={args.n_eval}"
+        f"_source={args.n_source}_seed={args.seed}_{theta_stem}"
+    )
 
     summary_path = summary_dir / f"summary_{stem}.csv"
     calibration_path = raw_dir / f"calibration_null_{stem}.csv"
