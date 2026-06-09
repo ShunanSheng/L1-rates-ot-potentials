@@ -14,22 +14,8 @@ def _raw_filename(d, n, B, n_source, seed):
     return f"trials_d={d}_n={n}_B={B}_source={n_source}_seed={seed}_split_eval.csv"
 
 
-def _raw_shard_filename(d, n, B, n_source, seed, b_start, b_stop):
-    return (
-        f"trials_d={d}_n={n}_B={B}_source={n_source}_seed={seed}"
-        f"_split_eval_b={b_start}-{b_stop}.csv"
-    )
-
-
 def _summary_filename(d, B, n_source, seed):
     return f"summary_d={d}_B={B}_source={n_source}_seed={seed}_split_eval.csv"
-
-
-def _summary_shard_filename(d, n, B, n_source, seed, b_start, b_stop):
-    return (
-        f"summary_d={d}_n={n}_B={B}_source={n_source}_seed={seed}"
-        f"_split_eval_b={b_start}-{b_stop}.csv"
-    )
 
 
 def run_one_n(
@@ -46,8 +32,6 @@ def run_one_n(
     source_eval_seed=None,
     max_iter=180,
     chunk_size=2048,
-    b_start=0,
-    b_stop=None,
     overwrite=False,
     save_results=True,
 ):
@@ -57,21 +41,11 @@ def run_one_n(
     When save_results=True, trial-level CSV and metadata JSON files are saved.
     When save_results=False, all trial results stay in memory.
     """
-    if b_stop is None:
-        b_stop = B
-    if not (0 <= b_start < b_stop <= B):
-        raise ValueError(f"Invalid trial range [{b_start}, {b_stop}) for B={B}")
-
-    is_shard = b_start != 0 or b_stop != B
-
     if save_results:
         outdir = Path(outdir)
-        raw_dir = ensure_dir(outdir / ("raw_shards" if is_shard else "raw"))
-        meta_dir = ensure_dir(outdir / ("metadata_shards" if is_shard else "metadata"))
-        if is_shard:
-            raw_path = raw_dir / _raw_shard_filename(d, n, B, n_source, seed, b_start, b_stop)
-        else:
-            raw_path = raw_dir / _raw_filename(d, n, B, n_source, seed)
+        raw_dir = ensure_dir(outdir / "raw")
+        meta_dir = ensure_dir(outdir / "metadata")
+        raw_path = raw_dir / _raw_filename(d, n, B, n_source, seed)
         meta_path = meta_dir / raw_path.with_suffix(".json").name
 
     rows = []
@@ -82,23 +56,22 @@ def run_one_n(
         raw_df_existing = pd.read_csv(raw_path)
         if "b" in raw_df_existing.columns:
             raw_df_existing = raw_df_existing.drop_duplicates("b", keep="last")
-            raw_df_existing = raw_df_existing[raw_df_existing["b"].between(b_start, b_stop - 1)]
+            raw_df_existing = raw_df_existing[raw_df_existing["b"].between(0, B - 1)]
             raw_df_existing = raw_df_existing.sort_values("b")
             rows = raw_df_existing.to_dict("records")
             completed_b = set(raw_df_existing["b"].astype(int))
         else:
             rows = raw_df_existing.to_dict("records")
 
-    if len(completed_b) >= (b_stop - b_start) and not overwrite:
+    if len(completed_b) >= B and not overwrite:
         raw_df = pd.DataFrame(rows)
     else:
         if completed_b:
             print(
-                f"[resume] d={d}, n={n}, b=[{b_start}, {b_stop}): "
-                f"found {len(completed_b)}/{b_stop - b_start} completed trials",
+                f"[resume] d={d}, n={n}: found {len(completed_b)}/{B} completed trials",
                 flush=True,
             )
-        for b in range(b_start, b_stop):
+        for b in range(B):
             if b in completed_b:
                 continue
 
@@ -163,7 +136,7 @@ def run_one_n(
             )
 
             # Save partial progress every 5 trials, and at the end.
-            if save_results and ((b + 1) % 5 == 0 or (b + 1) == b_stop):
+            if save_results and ((b + 1) % 5 == 0 or (b + 1) == B):
                 partial_df = pd.DataFrame(rows).drop_duplicates("b", keep="last").sort_values("b")
                 save_csv_atomic(partial_df, raw_path)
 
@@ -181,8 +154,6 @@ def run_one_n(
                 "seed": seed,
                 "max_iter": max_iter,
                 "chunk_size": chunk_size,
-                "b_start": b_start,
-                "b_stop": b_stop,
                 "raw_path": str(raw_path),
                 "runtime_seconds_total": time.time() - start_time,
             }, meta_path)
@@ -231,8 +202,6 @@ def run_ball_experiment(
     outdir="results",
     max_iter=180,
     chunk_size=2048,
-    b_start=0,
-    b_stop=None,
     overwrite=False,
     save_results=True,
 ):
@@ -242,14 +211,10 @@ def run_ball_experiment(
     The semi-discrete OT weights are solved on one source cloud and the
     L1(mu) loss is evaluated on an independent source cloud of the same size.
     """
-    if b_stop is None:
-        b_stop = B
-    is_shard = b_start != 0 or b_stop != B
-
     if save_results:
         outdir = Path(outdir)
-        ensure_dir(outdir / ("raw_shards" if is_shard else "raw"))
-        ensure_dir(outdir / ("summary_shards" if is_shard else "summary"))
+        ensure_dir(outdir / "raw")
+        ensure_dir(outdir / "summary")
 
     rng_solve = np.random.default_rng(seed)
     rng_eval = np.random.default_rng(seed + 1)
@@ -286,20 +251,13 @@ def run_ball_experiment(
             source_eval_seed=source_eval_seed,
             max_iter=max_iter,
             chunk_size=chunk_size,
-            b_start=b_start,
-            b_stop=b_stop,
             overwrite=overwrite,
             save_results=save_results,
         )
         rows.append(row)
         if save_results:
             summary_df = pd.DataFrame(rows)
-            if is_shard:
-                summary_path = outdir / "summary_shards" / _summary_shard_filename(
-                    d, int(n), B, n_source, seed, b_start, b_stop
-                )
-            else:
-                summary_path = outdir / "summary" / _summary_filename(d, B, n_source, seed)
+            summary_path = outdir / "summary" / _summary_filename(d, B, n_source, seed)
             save_csv_atomic(summary_df, summary_path)
         # print(summary_df.tail(1).to_string(index=False), flush=True)
 
