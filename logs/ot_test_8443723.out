@@ -1,0 +1,18 @@
+
+ Summary:
+ d   n   B  mean_loss  std_loss  se_loss     beta  mean_loss_over_beta
+ 2  10 100   0.104451  0.041904 0.004190 0.316228             0.330304
+ 2  30 100   0.063650  0.023475 0.002347 0.182574             0.348624
+ 2 100 100   0.036444  0.015179 0.001518 0.100000             0.364440
+ 2 300 100   0.021539  0.008551 0.000855 0.057735             0.373058
+
+Empirical log-log slope for mean loss: -0.464
+Log-log slope of beta(n,2): -0.500
+Using 4 split-evaluation trial CSV files from results_test/raw
+Saved aggregated summary to results_test/summary/aggregated.csv
+ d   n  mean_loss  std_loss   B     beta  se_loss  mean_loss_over_beta
+ 2  10   0.104451  0.041904 100 0.316228 0.004190             0.330304
+ 2  30   0.063650  0.023475 100 0.182574 0.002347             0.348624
+ 2 100   0.036444  0.015179 100 0.100000 0.001518             0.364440
+ 2 300   0.021539  0.008551 100 0.057735 0.000855             0.373058
+Saved results_test/figs/loglog_ot_potential_unit_ball_grid_reference_added.pdf

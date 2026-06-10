@@ -64,7 +64,7 @@ echo "Running GOF: d=${GOF_D}, n=${GOF_N}, B=${GOF_B}, n_eval=${GOF_N_EVAL}, n_s
   --seed "$GOF_SEED" \
   --max_iter "$GOF_MAX_ITER" \
   --chunk_size "$GOF_CHUNK_SIZE" \
-  --location_thetas 0.005 0.01 0.02 0.05 0.1 \
-  --scale_thetas 0.005 0.01 0.02 0.05 0.1 \
-  --mixture_thetas 0.005 0.01 0.02 0.05 0.1 \
+  --location_thetas 0.01 0.02 0.05 0.1 \
+  --scale_thetas 0.01 0.02 0.05 0.1 \
+  --mixture_thetas 0.01 0.02 0.05 0.1 \
   --outdir "$GOF_OUTDIR"

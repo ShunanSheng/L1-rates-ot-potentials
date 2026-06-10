@@ -31,7 +31,7 @@ def run_one_n(
     source_solve_seed=None,
     source_eval_seed=None,
     max_iter=180,
-    chunk_size=2048,
+    chunk_size=2500,
     overwrite=False,
     save_results=True,
 ):
@@ -194,14 +194,14 @@ def run_one_n(
 def run_ball_experiment(
     *,
     d=2,
-    n_target=(256, 512, 1024, 2048, 4096),
+    n_target=(100, 300, 1000, 3000),
     B=100,
-    n_source=4096,
+    n_source=5000,
     seed=2026,
     use_qmc_source=True,
     outdir="results",
     max_iter=180,
-    chunk_size=2048,
+    chunk_size=2500,
     overwrite=False,
     save_results=True,
 ):

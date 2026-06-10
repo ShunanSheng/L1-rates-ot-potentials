@@ -5,7 +5,7 @@
 #SBATCH --output=logs/by_d%A_%a.out
 #SBATCH --error=logs/by_d_%A_%a.err
 #SBATCH -c 1
-#SBATCH --time=0-22:00
+#SBATCH --time=2-00:00
 #SBATCH --mem-per-cpu=16gb
 #SBATCH --array=0-5
 
@@ -46,7 +46,7 @@ echo "Running new_d dimension d=${D}, task=${SLURM_ARRAY_TASK_ID}"
 
 "$PYTHON" scripts/run_experiment.py \
   --d "$D" \
-  --n_target 100 300 1000 3000 10000 \
+  --n_target 100 300 1000 3000\
   --B 100 \
   --n_source 10000 \
   --seed 2026 \
