@@ -157,7 +157,7 @@ def plot_results(summary_path, figdir, raw_dir=None, ncols=3):
     fig.supylabel(r"$\mathrm{loss}$", fontsize=20)
     fig.tight_layout()
 
-    out_path = Path(figdir) / "loglog_ot_potential_unit_ball_grid_reference_adde_eval_split.pdf"
+    out_path = Path(figdir) / "loglog_ot_potential_unit_ball_grid_reference_added_eval_split.pdf"
     fig.savefig(out_path, dpi=200)
     plt.close(fig)
     print(f"Saved {out_path}")
