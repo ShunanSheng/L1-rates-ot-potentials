@@ -1,208 +1,204 @@
-# OT potential experiment template
+# L1 Rates for OT Potentials
 
-This project packages the unit-ball empirical OT-potential experiment into reusable Python modules, a local Jupyter notebook workflow, and Slurm job files.
-This ZIP also includes `CODEX_INSTRUCTIONS.md`, a more detailed task specification intended for Codex or another coding agent.
+This repository contains numerical experiments for empirical semi-discrete optimal transport potentials on the unit ball.
 
-
-The production grid requested here is
-
-```text
-d in {2, 3, 4, 10}
-n_target = (256, 512, 1024, 2048, 4096)
-n_source = 4096
-B = 100
-```
-
-The code computes an approximation of
+The main rate experiment estimates
 
 ```text
 E[ inf_a || phi_hat_n - phi - a ||_{L1(mu)} ]
 ```
 
-for `mu = Unif(B_d)` and `phi(x) = 0.5 ||x||^2`.
+where `mu = Unif(B_d)` and `phi(x) = 0.5 ||x||^2`. The project also includes a Monte Carlo goodness-of-fit experiment based on the same fitted potential error statistic.
 
-## 1. Setup
+## Setup
 
-From the project root:
-
-```bash
-python -m venv .venv
-source .venv/bin/activate
-pip install -e ".[notebook]"
-```
-
-If you use conda instead:
+Create the environment from the project root:
 
 ```bash
-conda create -n ot-exp python=3.11 -y
-conda activate ot-exp
-pip install -e ".[notebook]"
-```
-
-For cluster jobs where Jupyter is not needed, `pip install -e .` is enough.
-
-## 2. Local notebook smoke test
-
-Use the notebook for local testing and exploration:
-
-```bash
-jupyter lab notebooks/local_test.ipynb
-```
-
-The notebook runs a tiny version first. This checks imports, solver calls, and plotting without using the command-line scripts or saving results automatically.
-
-The default notebook smoke-test parameters are:
-
-```text
-d = 2
-n_target = (16, 32)
-B = 2
-n_source = 512
-seed = 2026
-max_iter = 30
-```
-
-Check that the notebook directly displays the summary dataframe and log-log plot.
-
-## 3. Local medium notebook test
-
-After the smoke test works, edit the parameter cell in the notebook to run one production-size `n` with a small number of Monte Carlo repetitions:
-
-```python
-d = 2
-n_target = (256,)
-B = 3
-n_source = 4096
-max_iter = 80
-```
-
-This is the best way to estimate runtime and memory before using the cluster.
-
-## 4. Command-line scripts
-
-The command-line scripts are intended for cluster testing and production runs. This runs the full requested grid sequentially; usually it should be run on a cluster, not a laptop.
-
-```bash
-python scripts/run_grid.py \
-  --d_list 2 3 4 10 \
-  --n_target 256 512 1024 2048 4096 \
-  --B 100 \
-  --n_source 4096 \
-  --seed 2026 \
-  --outdir results \
-  --max_iter 180
-```
-
-## 5. Ginsburg cluster run with Slurm
-
-The Ginsburg examples use `sbatch <script>` for batch submission, and the `stats` account matches the template you provided. This project is CPU-based, so the Slurm files here do not request a GPU. The GPU directives in the DDPM template, such as `--gres=gpu:1`, `--constraint=rtx8000`, and `module load cuda11.1/toolkit`, are only needed for CUDA/GPU code.
-
-### 5.1 Copy the project to Ginsburg
-
-From your laptop, copy or sync this project to your Ginsburg home directory or, preferably for larger outputs, the `stats` scratch area. Columbia recommends using the transfer host for `scp`:
-
-```bash
-scp -r /path/to/ot_experiment <UNI>@motion.rcs.columbia.edu:/burg/stats/users/<UNI>/ot_experiment
-```
-
-Then log in and enter the project:
-
-```bash
-ssh <UNI>@ginsburg.rcs.columbia.edu
-# Short form also works:
-# ssh <UNI>@burg.rcs.columbia.edu
-cd /burg/stats/users/<UNI>/ot_experiment
-```
-
-If you keep the code under `/burg/home/<UNI>`, write large result directories under `/burg/stats/...` instead of filling the 50 GB home quota.
-
-### 5.2 Create the Python environment once
-
-On Ginsburg:
-
-```bash
-module load anaconda/3-2023.09
 conda env create -f environment.yml
 conda activate ot-exp
 python -m pip install -e .
-python -c "import otexp; print('otexp import OK')"
 ```
 
-If the conda environment already exists, update it instead:
+If the environment already exists:
 
 ```bash
-module load anaconda/3-2023.09
 conda env update -f environment.yml --prune
 conda activate ot-exp
 python -m pip install -e .
 ```
 
-### 5.3 Run a one-hour smoke test first
+For notebook use, install the notebook extras if available:
+
+```bash
+python -m pip install -e ".[notebook]"
+```
+
+## Semi-Discrete OT Computation
+
+For each target sample `Y_1, ..., Y_n`, the code fits weights `h_i` for the empirical potential
+
+```text
+phi_hat(x) = max_i { x . Y_i - 0.5 ||Y_i||^2 + h_i }.
+```
+
+The weights solve the discretized semi-discrete dual objective over a source cloud `X_solve` sampled from `mu`:
+
+```text
+M^{-1} sum_m max_i { X_solve_m . Y_i - 0.5 ||Y_i||^2 + h_i }
+- n^{-1} sum_i h_i.
+```
+
+This is implemented with L-BFGS-B in `src/otexp/core.py`:
+
+```text
+dual_obj_grad -> solve_weights -> evaluate_phi_hat
+```
+
+The current implementation uses two independent source clouds of size `n_source`:
+
+```text
+X_solve: used to compute the semi-discrete OT weights
+X_eval:  used only to evaluate the L1(mu) loss/statistic
+```
+
+This avoids evaluating the fitted potential on the same cloud used to fit the weights. Output filenames for these runs include `_split_eval`.
+
+## Rate Experiment
+
+Run one dimension from the command line:
+
+```bash
+python scripts/run_experiment.py \
+  --d 2 \
+  --n_target 100 300 1000 3000 10000 \
+  --B 100 \
+  --n_source 10000 \
+  --seed 2026 \
+  --outdir results \
+  --max_iter 1000
+```
+
+Run a sequential grid:
+
+```bash
+python scripts/run_grid.py \
+  --d_list 2 3 4 6 8 10 \
+  --n_target 100 300 1000 3000 10000 \
+  --B 100 \
+  --n_source 10000 \
+  --seed 2026 \
+  --outdir results \
+  --max_iter 1000
+```
+
+Outputs are written to:
+
+```text
+results/raw/trials_d=<d>_n=<n>_B=<B>_source=<n_source>_seed=<seed>_split_eval.csv
+results/metadata/
+results/summary/
+```
+
+Existing raw files are resumed by default. Use `--overwrite` to recompute a matching output file from scratch.
+
+## Goodness-of-Fit Test
+
+The GOF experiment tests
+
+```text
+H0: nu = mu0, where mu0 = Unif(B_d).
+```
+
+For each dataset `Y`, the statistic is
+
+```text
+T_n = sqrt(n) * mean_{X_eval} | (phi_hat(X_eval) - phi(X_eval))
+                              - median(phi_hat(X_eval) - phi(X_eval)) |.
+```
+
+The workflow is:
+
+1. Draw `B` null datasets to calibrate the empirical critical value.
+2. Draw `n_eval` fresh null datasets to estimate empirical size.
+3. Draw `n_eval` datasets for each alternative/theta to estimate empirical power.
+
+The alternatives are:
+
+```text
+location_shift:        Y = X + theta e1
+scale:                 Y = (1 + theta) X
+mixture_contamination: (1 - theta) mu0 + theta Law(X + mixture_shift e1)
+```
+
+Run GOF directly:
+
+```bash
+python scripts/run_gof.py \
+  --d 3 \
+  --n 3000 \
+  --B 1000 \
+  --n_eval 100 \
+  --n_source 5000 \
+  --seed 2026 \
+  --max_iter 200 \
+  --chunk_size 2500 \
+  --location_thetas 0.02 0.05 0.1 \
+  --scale_thetas 0.02 0.05 0.1 \
+  --mixture_thetas 0.02 0.05 0.1 \
+  --outdir results_gof
+```
+
+GOF outputs are written to:
+
+```text
+results_gof/summary/
+results_gof/raw/
+```
+
+The summary CSV includes:
+
+```text
+estimate: empirical rejection probability
+mc_se: Monte Carlo standard error of estimate over n_eval
+critical_value: empirical null critical value from B calibration runs
+success_rate: fraction of solver runs reporting success
+error_rate: fraction of runs with caught exceptions
+source_clouds: independent_solve_and_eval
+```
+
+## Slurm Workflow
+
+All jobs are CPU-only.
+
+Create logs and submit a rate smoke test:
 
 ```bash
 mkdir -p logs
 sbatch jobs/slurm_test.sh
 ```
 
-Check the queue and logs:
-
-```bash
-squeue -u "$USER"
-ls logs
-tail -n 80 logs/ot_test_<JOBID>.out
-tail -n 80 logs/ot_test_<JOBID>.err
-```
-
-The smoke test writes to `results_test/`. Confirm that these exist before launching the production array:
-
-```bash
-ls results_test/raw results_test/summary results_test/figs
-```
-
-### 5.4 Submit the production grid
-
-There are two Slurm templates.
-
-#### Option A: one array task per dimension
-
-Each task runs all five `n` values for one dimension.
-
-```bash
-sbatch jobs/slurm_array_by_d.sh
-```
-
-#### Option B: one array task per `(d,n)` pair
-
-This is easier to restart and is usually safer.
+Submit the production rate array, one task per `(d,n)` pair:
 
 ```bash
 sbatch jobs/slurm_array_by_pair.sh
 ```
 
-Monitor it with:
+Monitor jobs and logs:
 
 ```bash
 squeue -u "$USER"
-tail -n 60 logs/ot_pair_<ARRAY_JOBID>_<TASKID>.out
+tail -f logs/ot_pair_<ARRAY_JOBID>_<TASKID>.out
+tail -f logs/ot_pair_<ARRAY_JOBID>_<TASKID>.err
 ```
 
-To rerun only one failed `(d,n)` pair, resubmit the matching array index. For example, task `0` is `(d=2,n=100)` and task `29` is `(d=10,n=10000)`:
-
-```bash
-sbatch --array=0 jobs/slurm_array_by_pair.sh
-```
-
-### 5.5 Aggregate and plot after the array finishes
-
-Submit the post-processing job:
+After the rate array finishes, aggregate and plot:
 
 ```bash
 sbatch jobs/slurm_postprocess.sh
 ```
 
-Or run the same commands interactively from the project root:
-
-After all jobs finish:
+The same postprocess commands can be run interactively:
 
 ```bash
 python scripts/aggregate.py \
@@ -211,18 +207,44 @@ python scripts/aggregate.py \
 
 python scripts/plot_results.py \
   --summary_path results/summary/aggregated.csv \
+  --raw_dir results/raw \
   --figdir results/figs
 ```
 
-The final plot is written to:
+Submit the GOF job:
 
-```text
-results/figs/loglog_ot_potential_unit_ball_grid.png
+```bash
+sbatch jobs/slurm_gof.sh
 ```
 
-## 6. Notes
+Override GOF settings at submission time:
 
-- The code is CPU-based. Do not request GPU unless you rewrite the solver to use CUDA/PyTorch/JAX.
-- The `n=4096`, `B=100` cases can be expensive. Test one small job first.
-- The scripts skip existing raw files by default. Add `--overwrite` if you want to rerun them.
-- Raw trial-level outputs are saved separately for each `(d,n)`.
+```bash
+sbatch --export=ALL,GOF_D=3,GOF_N=3000,GOF_B=1000,GOF_N_EVAL=100 jobs/slurm_gof.sh
+```
+
+Check completed job runtime:
+
+```bash
+sacct -j <JOBID> --format=JobID,JobName%20,State,Elapsed,Start,End,MaxRSS,ExitCode
+```
+
+## Repository Layout
+
+```text
+src/otexp/          reusable sampling, solver, rate, and experiment code
+scripts/           command-line rate, GOF, aggregation, and plotting scripts
+jobs/              Slurm submission scripts
+notebooks/         local exploratory notebooks
+results/           rate experiment outputs
+results_gof/       GOF experiment outputs
+logs/              Slurm stdout/stderr
+```
+
+## Notes
+
+- `n_source` is the size of each source cloud. The code now draws one cloud for solving and one independent cloud for evaluation.
+- `B` is the Monte Carlo repetition count for the rate experiment, and the null calibration count for GOF.
+- `n_eval` is used only in GOF; it is the number of fresh evaluation datasets per scenario.
+- If empirical GOF power is `1.0` for all alternatives, decrease the theta grid.
+- If solver `success_rate` is low, increase `max_iter` or loosen/tune optimization tolerances.
