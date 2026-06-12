@@ -1,0 +1,21 @@
+Python executable: /burg-archive/home/ss6574/.conda/envs/ot-exp/bin/python
+Python version: 3.11.15 | packaged by conda-forge | (main, Mar  5 2026, 16:45:40) [GCC 14.3.0]
+otexp package: /burg-archive/home/ss6574/L1-rates-ot-potentials/src/otexp/__init__.py
+Running GOF: d=3, n=3000, B=1000, n_eval=100, n_source=5000
+
+Goodness-of-fit summary:
+       quantity              scenario                             alternative  theta  estimate    mc_se  n_eval  alpha  critical_value  calibration_B   mean_T  median_T  success_rate  error_rate              source_clouds  source_solve_seed  source_eval_seed
+ empirical size                  null                                    null   0.00      0.03 0.017059     100   0.05        0.469938           1000 0.291514  0.272346           0.0         0.0 independent_solve_and_eval               5026              8026
+empirical power        location_shift                        Y = X + theta e1   0.02      0.37 0.048280     100   0.05        0.469938           1000 0.441679  0.403552           0.0         0.0 independent_solve_and_eval               5026              8026
+empirical power        location_shift                        Y = X + theta e1   0.05      1.00 0.000000     100   0.05        0.469938           1000 1.038029  1.038957           0.0         0.0 independent_solve_and_eval               5026              8026
+empirical power        location_shift                        Y = X + theta e1   0.10      1.00 0.000000     100   0.05        0.469938           1000 2.109377  2.105271           0.0         0.0 independent_solve_and_eval               5026              8026
+empirical power                 scale                       Y = (1 + theta) X   0.02      0.04 0.019596     100   0.05        0.469938           1000 0.320232  0.301788           0.0         0.0 independent_solve_and_eval               5026              8026
+empirical power                 scale                       Y = (1 + theta) X   0.05      0.20 0.040000     100   0.05        0.469938           1000 0.434104  0.426623           0.0         0.0 independent_solve_and_eval               5026              8026
+empirical power                 scale                       Y = (1 + theta) X   0.10      1.00 0.000000     100   0.05        0.469938           1000 0.682726  0.684875           0.0         0.0 independent_solve_and_eval               5026              8026
+empirical power mixture_contamination (1 - theta) mu0 + theta Law(X + 0.5 e1)   0.02      0.08 0.027129     100   0.05        0.469938           1000 0.324372  0.292866           0.0         0.0 independent_solve_and_eval               5026              8026
+empirical power mixture_contamination (1 - theta) mu0 + theta Law(X + 0.5 e1)   0.05      0.28 0.044900     100   0.05        0.469938           1000 0.426947  0.403024           0.0         0.0 independent_solve_and_eval               5026              8026
+empirical power mixture_contamination (1 - theta) mu0 + theta Law(X + 0.5 e1)   0.10      0.97 0.017059     100   0.05        0.469938           1000 0.875392  0.856591           0.0         0.0 independent_solve_and_eval               5026              8026
+
+Saved summary to results_gof/summary/summary_gof_d=3_n=3000_B=1000_eval=100_source=5000_seed=2026_split_eval_loc=0p02-0p05-0p1_scale=0p02-0p05-0p1_mix=0p02-0p05-0p1_mixshift=0p5.csv
+Saved calibration null replicates to results_gof/raw/calibration_null_gof_d=3_n=3000_B=1000_eval=100_source=5000_seed=2026_split_eval_loc=0p02-0p05-0p1_scale=0p02-0p05-0p1_mix=0p02-0p05-0p1_mixshift=0p5.csv
+Saved simulation replicates to results_gof/raw/simulation_gof_d=3_n=3000_B=1000_eval=100_source=5000_seed=2026_split_eval_loc=0p02-0p05-0p1_scale=0p02-0p05-0p1_mix=0p02-0p05-0p1_mixshift=0p5.csv
