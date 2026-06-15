@@ -1,0 +1,115 @@
+Python executable: /burg-archive/home/ss6574/.conda/envs/ot-exp/bin/python
+Python version: 3.11.15 | packaged by conda-forge | (main, Mar  5 2026, 16:45:40) [GCC 14.3.0]
+otexp package: /burg-archive/home/ss6574/L1-rates-ot-potentials/src/otexp/__init__.py
+Running new_d dimension d=2, task=0
+[trial] d=2, n=10000, b=1/100, runtime=841.93s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=2/100, runtime=842.20s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=3/100, runtime=842.04s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=4/100, runtime=842.25s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=5/100, runtime=841.99s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=6/100, runtime=864.24s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=7/100, runtime=909.49s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=8/100, runtime=929.27s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=9/100, runtime=866.41s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=10/100, runtime=857.52s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=11/100, runtime=857.54s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=12/100, runtime=857.90s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=13/100, runtime=857.33s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=14/100, runtime=857.24s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=15/100, runtime=857.40s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=16/100, runtime=857.39s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=17/100, runtime=857.06s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=18/100, runtime=857.58s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=19/100, runtime=857.46s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=20/100, runtime=929.54s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=21/100, runtime=914.98s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=22/100, runtime=854.26s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=23/100, runtime=858.25s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=24/100, runtime=858.31s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=25/100, runtime=857.00s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=26/100, runtime=875.88s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=27/100, runtime=861.13s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=28/100, runtime=854.39s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=29/100, runtime=854.48s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=30/100, runtime=854.68s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=31/100, runtime=854.82s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=32/100, runtime=850.14s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=33/100, runtime=853.92s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=34/100, runtime=848.45s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=35/100, runtime=848.42s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=36/100, runtime=848.34s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=37/100, runtime=848.15s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=38/100, runtime=843.90s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=39/100, runtime=838.88s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=40/100, runtime=838.85s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=41/100, runtime=838.80s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=42/100, runtime=838.70s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=43/100, runtime=838.64s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=44/100, runtime=838.52s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=45/100, runtime=839.30s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=46/100, runtime=840.55s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=47/100, runtime=840.46s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=48/100, runtime=839.03s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=49/100, runtime=838.61s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=50/100, runtime=838.91s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=51/100, runtime=838.75s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=52/100, runtime=838.80s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=53/100, runtime=838.71s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=54/100, runtime=838.74s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=55/100, runtime=838.73s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=56/100, runtime=838.84s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=57/100, runtime=838.87s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=58/100, runtime=838.98s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=59/100, runtime=838.71s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=60/100, runtime=838.95s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=61/100, runtime=847.22s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=62/100, runtime=848.27s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=63/100, runtime=848.40s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=64/100, runtime=848.19s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=65/100, runtime=845.31s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=66/100, runtime=840.42s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=67/100, runtime=840.76s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=68/100, runtime=840.64s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=69/100, runtime=840.77s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=70/100, runtime=840.59s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=71/100, runtime=840.50s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=72/100, runtime=840.44s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=73/100, runtime=840.74s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=74/100, runtime=840.62s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=75/100, runtime=840.82s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=76/100, runtime=840.25s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=77/100, runtime=839.65s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=78/100, runtime=839.60s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=79/100, runtime=839.67s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=80/100, runtime=840.32s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=81/100, runtime=847.37s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=82/100, runtime=855.51s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=83/100, runtime=859.24s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=84/100, runtime=859.22s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=85/100, runtime=859.04s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=86/100, runtime=859.13s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=87/100, runtime=859.74s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=88/100, runtime=851.12s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=89/100, runtime=851.49s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=90/100, runtime=851.34s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=91/100, runtime=850.18s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=92/100, runtime=837.54s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=93/100, runtime=838.41s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=94/100, runtime=838.40s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=95/100, runtime=839.37s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=96/100, runtime=837.08s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=97/100, runtime=837.12s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=98/100, runtime=837.07s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=99/100, runtime=837.46s, success=False, nit=1000, nfev=1004
+[trial] d=2, n=10000, b=100/100, runtime=837.25s, success=False, nit=1000, nfev=1004
+
+ Summary:
+ d     n   B  mean_loss  std_loss  se_loss     beta  mean_loss_over_beta
+ 2   100 100   0.036461  0.015168 0.001517 0.100000             0.364606
+ 2   300 100   0.021587  0.008507 0.000851 0.057735             0.373890
+ 2  1000 100   0.011323  0.004108 0.000411 0.031623             0.358060
+ 2  3000 100   0.006808  0.003231 0.000323 0.018257             0.372885
+ 2 10000 100   0.002158  0.001458 0.000146 0.010000             0.215824
+
+Empirical log-log slope for mean loss: -0.592
+Log-log slope of beta(n,2): -0.500
