@@ -32,3 +32,14 @@ def save_json(obj: dict, path):
     ensure_dir(path.parent)
     with open(path, "w") as f:
         json.dump(obj, f, indent=2)
+
+
+def load_json(path):
+    path = Path(path)
+    with open(path) as f:
+        return json.load(f)
+
+
+def file_exists_and_nonempty(path):
+    path = Path(path)
+    return path.exists() and path.is_file() and path.stat().st_size > 0

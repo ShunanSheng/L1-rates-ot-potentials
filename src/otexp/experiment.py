@@ -8,6 +8,15 @@ from .sampling import phi_true, sample_mu
 from .core import evaluate_phi_hat, one_trial, solve_weights
 from .rates import beta_rate
 from .io import ensure_dir, save_csv_atomic, save_json
+from .gof import (
+    ALT_LEVELS,
+    default_gof_config,
+    prepare_gof_references,
+    run_gof_all,
+    run_gof_calibration,
+    run_gof_power,
+    run_gof_size,
+)
 
 
 def _raw_filename(d, n, B, n_source, seed):
@@ -275,6 +284,42 @@ def run_ball_experiment(
 
 
 def run_gof_experiment(
+    *,
+    null_name="uniform_ball",
+    mode="all",
+    alt_type="location_shift",
+    level=None,
+    chunk_id=None,
+    num_chunks=None,
+    **config_overrides,
+):
+    """
+    Public GOF orchestration entry point.
+
+    This delegates to src/otexp/gof.py. Use scripts/run_gof.py for command-line
+    production runs.
+    """
+    config = default_gof_config(**config_overrides)
+
+    if mode == "prepare_references":
+        return prepare_gof_references(null_name, config)
+    if mode == "calibration":
+        return run_gof_calibration(null_name, config, chunk_id=chunk_id, num_chunks=num_chunks)
+    if mode == "size":
+        return run_gof_size(null_name, config, chunk_id=chunk_id, num_chunks=num_chunks)
+    if mode == "power":
+        if level is None:
+            return [
+                run_gof_power(null_name, alt_type, alt_level, config, chunk_id=chunk_id, num_chunks=num_chunks)
+                for alt_level in ALT_LEVELS[alt_type]
+            ]
+        return run_gof_power(null_name, alt_type, level, config, chunk_id=chunk_id, num_chunks=num_chunks)
+    if mode == "all":
+        return run_gof_all(null_name, config)
+    raise ValueError(f"Unknown GOF mode: {mode}")
+
+
+def _run_unit_ball_gof_experiment(
     *,
     d=2,
     n=32,

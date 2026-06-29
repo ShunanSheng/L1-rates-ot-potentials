@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 import argparse
 
-from otexp.experiment import run_ball_experiment
-
 
 def main():
     parser = argparse.ArgumentParser(description="Run unit-ball empirical OT-potential experiment for one d.")
@@ -17,6 +15,8 @@ def main():
     parser.add_argument("--chunk_size", type=int, default=2048)
     parser.add_argument("--overwrite", action="store_true")
     args = parser.parse_args()
+
+    from otexp.experiment import run_ball_experiment
 
    
     df, slope_loss, slope_beta = run_ball_experiment(

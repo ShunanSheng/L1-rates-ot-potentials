@@ -8,97 +8,109 @@ SRC = PROJECT_ROOT / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
-
-def _float_tuple(values):
-    return tuple(float(value) for value in values)
-
-
-def _format_number_for_filename(value):
-    text = f"{float(value):g}"
-    return text.replace("-", "m").replace(".", "p")
+GOF_NULLS = ("uniform_ball", "truncated_gaussian", "truncated_elliptical_t")
+ALT_LEVELS = {
+    "location_shift": (0.05, 0.10, 0.15, 0.20, 0.25, 0.30),
+    "scale": (1.025, 1.05, 1.075, 1.10, 1.15, 1.20),
+    "mixture_contamination": (0.01, 0.02, 0.05, 0.10, 0.15, 0.20),
+}
 
 
-def _theta_label(prefix, values):
-    return f"{prefix}=" + "-".join(_format_number_for_filename(value) for value in values)
+def _nulls_from_arg(value):
+    return GOF_NULLS if value == "all" else (value,)
+
+
+def _levels_for_power(alt, level):
+    if level is not None:
+        return (float(level),)
+    return ALT_LEVELS[alt]
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="Run a goodness-of-fit experiment for the unit ball."
-    )
-    parser.add_argument("--d", type=int, default=2)
-    parser.add_argument("--n", type=int, default=32)
-    parser.add_argument("--B", type=int, default=100)
-    parser.add_argument("--n_eval", type=int, default=100)
+    parser = argparse.ArgumentParser(description="Run GOF experiments for simple nulls.")
+    parser.add_argument("--mode", choices=["prepare_references", "calibration", "size", "power", "all"], required=True)
+    parser.add_argument("--null", choices=[*GOF_NULLS, "all"], required=True)
+    parser.add_argument("--alt", choices=list(ALT_LEVELS), default="location_shift")
+    parser.add_argument("--level", type=float, default=None)
+    parser.add_argument("--d", type=int, default=3)
+    parser.add_argument("--n", type=int, default=500)
+    parser.add_argument("--B_cal", type=int, default=500)
+    parser.add_argument("--N_size", type=int, default=500)
+    parser.add_argument("--N_alt", type=int, default=500)
     parser.add_argument("--alpha", type=float, default=0.05)
-    parser.add_argument("--location_thetas", type=float, nargs="+", default=[0.1, 0.25, 0.5])
-    parser.add_argument("--scale_thetas", type=float, nargs="+", default=[0.1, 0.25, 0.5])
-    parser.add_argument("--mixture_thetas", type=float, nargs="+", default=[0.1, 0.25, 0.5])
-    parser.add_argument("--mixture_shift", type=float, default=0.5)
-    parser.add_argument("--n_source", type=int, default=4096)
+    parser.add_argument("--n_solve", type=int, default=10000)
+    parser.add_argument("--n_eval_source", type=int, default=10000)
     parser.add_argument("--seed", type=int, default=2026)
     parser.add_argument("--use_qmc_source", action=argparse.BooleanOptionalAction, default=True)
-    parser.add_argument("--max_iter", type=int, default=180)
-    parser.add_argument("--chunk_size", type=int, default=2048)
+    parser.add_argument("--max_iter", type=int, default=200)
+    parser.add_argument("--chunk_size", type=int, default=2500)
     parser.add_argument("--gtol", type=float, default=1e-5)
     parser.add_argument("--ftol", type=float, default=1e-10)
+    parser.add_argument("--chunk_id", type=int, default=None)
+    parser.add_argument("--num_chunks", type=int, default=None)
     parser.add_argument("--outdir", type=str, default="results_gof")
+    parser.add_argument("--overwrite", action="store_true")
     args = parser.parse_args()
 
-    from otexp.experiment import run_gof_experiment
-    from otexp.io import ensure_dir, save_csv_atomic
+    if args.d != 3:
+        raise ValueError("The GOF experiment currently supports d=3 only.")
+    if args.mode == "power" and args.null == "all":
+        raise ValueError("--mode power requires a single --null value.")
+    if (args.chunk_id is None) != (args.num_chunks is None):
+        raise ValueError("--chunk_id and --num_chunks must be supplied together.")
 
-    location_thetas = _float_tuple(args.location_thetas)
-    scale_thetas = _float_tuple(args.scale_thetas)
-    mixture_thetas = _float_tuple(args.mixture_thetas)
+    from otexp.gof import (
+        default_gof_config,
+        prepare_gof_references,
+        run_gof_all,
+        run_gof_calibration,
+        run_gof_power,
+        run_gof_size,
+    )
 
-    summary_df, calibration_null_df, sim_df = run_gof_experiment(
+    config = default_gof_config(
         d=args.d,
         n=args.n,
-        B=args.B,
-        n_eval=args.n_eval,
+        B_cal=args.B_cal,
+        N_size=args.N_size,
+        N_alt=args.N_alt,
         alpha=args.alpha,
-        location_thetas=location_thetas,
-        scale_thetas=scale_thetas,
-        mixture_thetas=mixture_thetas,
-        mixture_shift=args.mixture_shift,
-        n_source=args.n_source,
+        n_solve=args.n_solve,
+        n_eval_source=args.n_eval_source,
         seed=args.seed,
         use_qmc_source=args.use_qmc_source,
         max_iter=args.max_iter,
         chunk_size=args.chunk_size,
         gtol=args.gtol,
         ftol=args.ftol,
+        outdir=args.outdir,
+        overwrite=args.overwrite,
     )
 
-    outdir = Path(args.outdir)
-    summary_dir = ensure_dir(outdir / "summary")
-    raw_dir = ensure_dir(outdir / "raw")
-    theta_stem = "_".join([
-        _theta_label("loc", location_thetas),
-        _theta_label("scale", scale_thetas),
-        _theta_label("mix", mixture_thetas),
-        f"mixshift={_format_number_for_filename(args.mixture_shift)}",
-    ])
-    stem = (
-        f"gof_d={args.d}_n={args.n}_B={args.B}_eval={args.n_eval}"
-        f"_source={args.n_source}_seed={args.seed}_split_eval_{theta_stem}"
-    )
-
-    summary_path = summary_dir / f"summary_{stem}.csv"
-    calibration_path = raw_dir / f"calibration_null_{stem}.csv"
-    simulation_path = raw_dir / f"simulation_{stem}.csv"
-
-    save_csv_atomic(summary_df, summary_path)
-    save_csv_atomic(calibration_null_df, calibration_path)
-    save_csv_atomic(sim_df, simulation_path)
-
-    print("\nGoodness-of-fit summary:")
-    print(summary_df.to_string(index=False))
-    print()
-    print(f"Saved summary to {summary_path}")
-    print(f"Saved calibration null replicates to {calibration_path}")
-    print(f"Saved simulation replicates to {simulation_path}")
+    for null_name in _nulls_from_arg(args.null):
+        print(f"[gof] mode={args.mode}, null={null_name}", flush=True)
+        if args.mode == "prepare_references":
+            prepare_gof_references(null_name, config)
+        elif args.mode == "calibration":
+            df = run_gof_calibration(null_name, config, chunk_id=args.chunk_id, num_chunks=args.num_chunks)
+            print(df.groupby("statistic")["value"].describe().to_string())
+        elif args.mode == "size":
+            df = run_gof_size(null_name, config, chunk_id=args.chunk_id, num_chunks=args.num_chunks)
+            print(df.groupby("statistic")["reject"].mean().to_string())
+        elif args.mode == "power":
+            for level in _levels_for_power(args.alt, args.level):
+                print(f"[gof] power alt={args.alt}, level={level}", flush=True)
+                df = run_gof_power(
+                    null_name,
+                    args.alt,
+                    level,
+                    config,
+                    chunk_id=args.chunk_id,
+                    num_chunks=args.num_chunks,
+                )
+                print(df.groupby("statistic")["reject"].mean().to_string())
+        elif args.mode == "all":
+            run_gof_all(null_name, config)
 
 
 if __name__ == "__main__":

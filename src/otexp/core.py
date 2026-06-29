@@ -83,6 +83,34 @@ def evaluate_phi_hat(X, Y, h, chunk_size=2048):
     return out
 
 
+def evaluate_phi_hat_and_assignment(X, Y, h, chunk_size=2048):
+    """
+    Evaluate phi_hat and return the maximizing target index for each x.
+    """
+    M = X.shape[0]
+    y_norm = 0.5 * np.sum(Y * Y, axis=1)
+    values = np.empty(M)
+    assignment = np.empty(M, dtype=np.int64)
+
+    for start in range(0, M, chunk_size):
+        Xb = X[start:start + chunk_size]
+        scores = Xb @ Y.T - y_norm[None, :] + h[None, :]
+        arg = np.argmax(scores, axis=1)
+        stop = start + len(Xb)
+        values[start:stop] = scores[np.arange(len(Xb)), arg]
+        assignment[start:stop] = arg
+
+    return values, assignment
+
+
+def evaluate_w2_from_assignment(X, Y, assignment):
+    """
+    Approximate W2^2 by mapping each source point to its assigned target atom.
+    """
+    diff = X - Y[np.asarray(assignment, dtype=np.int64)]
+    return float(np.mean(np.sum(diff * diff, axis=1)))
+
+
 def one_trial(
     n,
     d,
