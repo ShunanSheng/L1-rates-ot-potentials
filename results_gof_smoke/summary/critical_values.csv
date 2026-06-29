@@ -1,0 +1,4 @@
+null_name,statistic,alpha,critical_value,calibration_B,n,n_eval_source,n_solve,base_seed
+uniform_ball,mmd,0.05,-0.0370901624143036,2,4,16,16,2033
+uniform_ball,potential,0.05,0.3280336727174123,2,4,16,16,2033
+uniform_ball,w2,0.05,0.4780765779676139,2,4,16,16,2033

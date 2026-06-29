@@ -1,0 +1,4 @@
+null_name,scenario,alt_type,level,replicate,seed,statistic,value,critical_value,reject,runtime_seconds,success,status,message,nit,nfev,njev,fun,grad_inf,error_message,n,n_eval_source,n_solve,base_seed
+uniform_ball,power,scale,1.05,0,2407033,potential,0.4128757537230676,0.3280336727174123,True,0.0013184547424316406,True,0,CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL,4,9,9,0.008925378012310045,0.0,,4,16,16,2033
+uniform_ball,power,scale,1.05,0,2407033,w2,0.6277357659150662,0.4780765779676139,True,0.0013227462768554688,True,0,CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL,4,9,9,0.008925378012310045,0.0,,4,16,16,2033
+uniform_ball,power,scale,1.05,0,2407033,mmd,-0.0021216530430410163,-0.0370901624143036,True,0.0013256072998046875,True,0,,0,0,0,,,,4,16,16,2033

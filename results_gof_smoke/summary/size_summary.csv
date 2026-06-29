@@ -1,0 +1,4 @@
+quantity,null_name,scenario,alt_type,level,statistic,estimate,mc_se,num_replicates,critical_value,success_rate,error_rate,mean_value,median_value,n,n_eval_source,n_solve,base_seed
+empirical size,uniform_ball,size,,0.0,mmd,0.0,0.0,2,-0.0370901624143036,1.0,0.0,-0.0560299842782081,-0.0560299842782081,4,16,16,2033
+empirical size,uniform_ball,size,,0.0,potential,0.0,0.0,2,0.3280336727174123,0.5,0.0,0.30227005635404824,0.30227005635404824,4,16,16,2033
+empirical size,uniform_ball,size,,0.0,w2,0.5,0.3535533905932738,2,0.4780765779676139,0.5,0.0,0.5096908118158651,0.5096908118158651,4,16,16,2033

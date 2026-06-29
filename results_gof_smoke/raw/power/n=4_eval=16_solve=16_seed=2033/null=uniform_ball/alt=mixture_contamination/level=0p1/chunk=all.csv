@@ -1,0 +1,4 @@
+null_name,scenario,alt_type,level,replicate,seed,statistic,value,critical_value,reject,runtime_seconds,success,status,message,nit,nfev,njev,fun,grad_inf,error_message,n,n_eval_source,n_solve,base_seed
+uniform_ball,power,mixture_contamination,0.1,0,3312033,potential,0.245094799389577,0.3280336727174123,False,0.001234292984008789,False,1,STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT,5,8,8,0.048380340148293115,0.0625,,4,16,16,2033
+uniform_ball,power,mixture_contamination,0.1,0,3312033,w2,0.4512228921477118,0.4780765779676139,False,0.0012388229370117188,False,1,STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT,5,8,8,0.048380340148293115,0.0625,,4,16,16,2033
+uniform_ball,power,mixture_contamination,0.1,0,3312033,mmd,0.008992102675285496,-0.0370901624143036,True,0.001241445541381836,True,0,,0,0,0,,,,4,16,16,2033

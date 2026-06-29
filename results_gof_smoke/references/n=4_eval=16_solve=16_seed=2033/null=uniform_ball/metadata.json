@@ -1,0 +1,16 @@
+{
+  "null_name": "uniform_ball",
+  "null_config": {
+    "name": "uniform_ball",
+    "d": 3,
+    "description": "Unif(B_3(0,1))"
+  },
+  "n": 4,
+  "n_solve": 16,
+  "n_eval_source": 16,
+  "mmd_reference": "X_eval",
+  "seed": 2033,
+  "use_qmc_source": true,
+  "sigma0": 1.0714374275174274,
+  "ref_ref_term": 0.559937564880302
+}

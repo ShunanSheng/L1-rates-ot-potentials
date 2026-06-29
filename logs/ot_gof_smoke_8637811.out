@@ -1,0 +1,50 @@
+Python executable: /burg-archive/home/ss6574/.conda/envs/ot-exp/bin/python
+Python version: 3.11.15 | packaged by conda-forge | (main, Mar  5 2026, 16:45:40) [GCC 14.3.0]
+otexp package: /burg-archive/home/ss6574/L1-rates-ot-potentials/src/otexp/__init__.py
+
+== Tiny GOF end-to-end run ==
+[gof] mode=all, null=uniform_ball
+
+== Aggregate GOF smoke outputs ==
+Saved results_gof_smoke/summary/critical_values.csv
+Saved results_gof_smoke/summary/size_summary.csv
+Saved results_gof_smoke/summary/power_summary.csv
+Saved results_gof_smoke/summary/paired_power_differences.csv
+Saved results_gof_smoke/summary/runtime_summary.csv
+
+== Plot GOF smoke outputs ==
+Saved results_gof_smoke/figs/power_uniform_ball_1x3.pdf
+Saved results_gof_smoke/figs/power_uniform_ball_1x3.png
+
+== Smoke output files ==
+results_gof_smoke/figs/power_uniform_ball_1x3.pdf
+results_gof_smoke/figs/power_uniform_ball_1x3.png
+results_gof_smoke/raw/calibration/n=4_eval=16_solve=16_seed=2033/null=uniform_ball/chunk=all.csv
+results_gof_smoke/raw/power/n=4_eval=16_solve=16_seed=2033/null=uniform_ball/alt=location_shift/level=0p05/chunk=all.csv
+results_gof_smoke/raw/power/n=4_eval=16_solve=16_seed=2033/null=uniform_ball/alt=location_shift/level=0p15/chunk=all.csv
+results_gof_smoke/raw/power/n=4_eval=16_solve=16_seed=2033/null=uniform_ball/alt=location_shift/level=0p1/chunk=all.csv
+results_gof_smoke/raw/power/n=4_eval=16_solve=16_seed=2033/null=uniform_ball/alt=location_shift/level=0p25/chunk=all.csv
+results_gof_smoke/raw/power/n=4_eval=16_solve=16_seed=2033/null=uniform_ball/alt=location_shift/level=0p2/chunk=all.csv
+results_gof_smoke/raw/power/n=4_eval=16_solve=16_seed=2033/null=uniform_ball/alt=location_shift/level=0p3/chunk=all.csv
+results_gof_smoke/raw/power/n=4_eval=16_solve=16_seed=2033/null=uniform_ball/alt=mixture_contamination/level=0p01/chunk=all.csv
+results_gof_smoke/raw/power/n=4_eval=16_solve=16_seed=2033/null=uniform_ball/alt=mixture_contamination/level=0p02/chunk=all.csv
+results_gof_smoke/raw/power/n=4_eval=16_solve=16_seed=2033/null=uniform_ball/alt=mixture_contamination/level=0p05/chunk=all.csv
+results_gof_smoke/raw/power/n=4_eval=16_solve=16_seed=2033/null=uniform_ball/alt=mixture_contamination/level=0p15/chunk=all.csv
+results_gof_smoke/raw/power/n=4_eval=16_solve=16_seed=2033/null=uniform_ball/alt=mixture_contamination/level=0p1/chunk=all.csv
+results_gof_smoke/raw/power/n=4_eval=16_solve=16_seed=2033/null=uniform_ball/alt=mixture_contamination/level=0p2/chunk=all.csv
+results_gof_smoke/raw/power/n=4_eval=16_solve=16_seed=2033/null=uniform_ball/alt=scale/level=1p025/chunk=all.csv
+results_gof_smoke/raw/power/n=4_eval=16_solve=16_seed=2033/null=uniform_ball/alt=scale/level=1p05/chunk=all.csv
+results_gof_smoke/raw/power/n=4_eval=16_solve=16_seed=2033/null=uniform_ball/alt=scale/level=1p075/chunk=all.csv
+results_gof_smoke/raw/power/n=4_eval=16_solve=16_seed=2033/null=uniform_ball/alt=scale/level=1p15/chunk=all.csv
+results_gof_smoke/raw/power/n=4_eval=16_solve=16_seed=2033/null=uniform_ball/alt=scale/level=1p1/chunk=all.csv
+results_gof_smoke/raw/power/n=4_eval=16_solve=16_seed=2033/null=uniform_ball/alt=scale/level=1p2/chunk=all.csv
+results_gof_smoke/raw/size/n=4_eval=16_solve=16_seed=2033/null=uniform_ball/chunk=all.csv
+results_gof_smoke/references/n=4_eval=16_solve=16_seed=2033/null=uniform_ball/metadata.json
+results_gof_smoke/references/n=4_eval=16_solve=16_seed=2033/null=uniform_ball/references.npz
+results_gof_smoke/summary/critical_values.csv
+results_gof_smoke/summary/paired_power_differences.csv
+results_gof_smoke/summary/power_summary.csv
+results_gof_smoke/summary/runtime_summary.csv
+results_gof_smoke/summary/size_summary.csv
+
+GOF smoke Slurm test completed successfully.
