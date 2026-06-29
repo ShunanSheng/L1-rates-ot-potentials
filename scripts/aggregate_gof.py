@@ -64,7 +64,7 @@ def _attach_reject(df, critical_values):
 
     merge_cols = [*_present_spec_cols(df), "null_name", "statistic"]
     merged = df.drop(columns=["critical_value", "reject"], errors="ignore").merge(
-        critical_values[[*merge_cols, "critical_value"]],
+        critical_values[[*merge_cols, "critical_value", "alpha"]],
         on=merge_cols,
         how="left",
     )
@@ -96,6 +96,7 @@ def _rejection_summary(df, quantity):
             "estimate": estimate,
             "mc_se": float(np.sqrt(estimate * (1.0 - estimate) / len(reject))) if len(reject) else np.nan,
             "num_replicates": int(len(reject)),
+            "alpha": float(group["alpha"].dropna().iloc[0]) if "alpha" in group and group["alpha"].notna().any() else np.nan,
             "critical_value": float(group["critical_value"].dropna().iloc[0]) if group["critical_value"].notna().any() else np.nan,
             "success_rate": float(group["success"].mean()) if "success" in group else np.nan,
             "error_rate": float(group["error_message"].fillna("").astype(bool).mean()) if "error_message" in group else np.nan,

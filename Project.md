@@ -932,13 +932,18 @@ results_gof/summary/runtime_summary.csv
 GOF figure outputs:
 
 ```text
-results_gof/figs/power_uniform_ball_1x3.pdf
-results_gof/figs/power_uniform_ball_1x3.png
-results_gof/figs/power_truncated_gaussian_1x3.pdf
-results_gof/figs/power_truncated_gaussian_1x3.png
-results_gof/figs/power_truncated_elliptical_t_1x3.pdf
-results_gof/figs/power_truncated_elliptical_t_1x3.png
+results_gof/figs/power_uniform_ball_1x3_n=<n>_n_eval_source=<n_eval_source>_n_solve=<n_solve>_base_seed=<seed>.pdf
+results_gof/figs/power_uniform_ball_1x3_n=<n>_n_eval_source=<n_eval_source>_n_solve=<n_solve>_base_seed=<seed>.png
+results_gof/figs/power_truncated_gaussian_1x3_n=<n>_n_eval_source=<n_eval_source>_n_solve=<n_solve>_base_seed=<seed>.pdf
+results_gof/figs/power_truncated_gaussian_1x3_n=<n>_n_eval_source=<n_eval_source>_n_solve=<n_solve>_base_seed=<seed>.png
+results_gof/figs/power_truncated_elliptical_t_1x3_n=<n>_n_eval_source=<n_eval_source>_n_solve=<n_solve>_base_seed=<seed>.pdf
+results_gof/figs/power_truncated_elliptical_t_1x3_n=<n>_n_eval_source=<n_eval_source>_n_solve=<n_solve>_base_seed=<seed>.png
 ```
+
+The GOF plots use the same serif statistical style as the rate plots. Curves
+show empirical rejection probabilities with 95% Monte Carlo error bars, a
+horizontal nominal-alpha reference line, and legend labels reporting empirical
+size under the null.
 
 GOF summary columns should include:
 
@@ -947,18 +952,19 @@ null_name
 alt_type
 level
 statistic
-N
-reject_count
 estimate
 mc_se
-critical_value
+num_replicates
 alpha
-B_cal
+critical_value
 success_rate
 error_rate
 mean_value
 median_value
-runtime_mean_seconds
+n
+n_eval_source
+n_solve
+base_seed
 ```
 
 Paired power-difference columns should include:
@@ -967,16 +973,21 @@ Paired power-difference columns should include:
 null_name
 alt_type
 level
-benchmark
-N
-delta
-se
+left_statistic
+right_statistic
+estimate
+mc_se
+num_pairs
+n
+n_eval_source
+n_solve
+base_seed
 ```
 
-where `benchmark` is either `w2` or `mmd`, and
+where `estimate` is
 
 ```text
-delta = mean(1{Potential rejects} - 1{Benchmark rejects}).
+mean(1{left_statistic rejects} - 1{right_statistic rejects}).
 ```
 
 ---
