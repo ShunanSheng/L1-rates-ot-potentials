@@ -11,5 +11,7 @@ results/figs/*.png
 results/archive/
 results_notebook/
 results_medium/
-results_gof/raw/*.csv
+results_gof/raw/
+results_gof/references/
+
 
