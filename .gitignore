@@ -2,8 +2,8 @@
 __pycache__/
 *.py[cod]
 .DS_Store
-# logs/*.out
-# logs/*.err
+logs/*.out
+logs/*.err
 results/raw/*.csv
 results/metadata/*.json
 # results/summary/*.csv
@@ -13,5 +13,6 @@ results_notebook/
 results_medium/
 results_gof/raw/
 results_gof/references/
-
+results_gof_maxiter_test/
+results_gof_smoke/
 
