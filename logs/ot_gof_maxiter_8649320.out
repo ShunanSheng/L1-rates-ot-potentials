@@ -1,0 +1,96 @@
+Python executable: /burg-archive/home/ss6574/.conda/envs/ot-exp/bin/python
+Python version: 3.11.15 | packaged by conda-forge | (main, Mar  5 2026, 16:45:40) [GCC 14.3.0]
+otexp package: /burg-archive/home/ss6574/L1-rates-ot-potentials/src/otexp/__init__.py
+
+== GOF max_iter pilot configuration ==
+outdir=results_gof_maxiter_test
+max_iters=500 1000 2000
+null=truncated_gaussian
+n=1000, B_cal=20
+n_solve=5000, n_eval_source=5000
+chunk_size=2500, seed=2026
+
+== Calibration pilot: max_iter=500 ==
+[gof] mode=calibration, null=truncated_gaussian
+           count      mean       std       min       25%       50%       75%       max
+statistic                                                                             
+mmd         20.0  0.000045  0.000250 -0.000273 -0.000126 -0.000016  0.000130  0.000724
+potential   20.0  1.568193  0.347831  1.149195  1.384760  1.551079  1.710074  2.625419
+w2          20.0  0.052935  0.002954  0.048892  0.050964  0.052403  0.054583  0.061340
+
+== Aggregate pilot output: max_iter=500 ==
+Saved results_gof_maxiter_test/max_iter=500/summary/critical_values.csv
+Saved results_gof_maxiter_test/max_iter=500/summary/size_summary.csv
+Saved results_gof_maxiter_test/max_iter=500/summary/power_summary.csv
+Saved results_gof_maxiter_test/max_iter=500/summary/paired_power_differences.csv
+Saved results_gof_maxiter_test/max_iter=500/summary/runtime_summary.csv
+
+== OT success diagnostics: max_iter=500 ==
+unique_ot_solves 20
+success_rate 0.5
+median_nit 490.5
+max_nit 500
+median_grad_inf 0.0001999999999999
+max_grad_inf 0.0004
+success  status  message                                             
+False    1       STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT             10
+True     0       CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH    10
+
+== Calibration pilot: max_iter=1000 ==
+[gof] mode=calibration, null=truncated_gaussian
+           count      mean       std       min       25%       50%       75%       max
+statistic                                                                             
+mmd         20.0  0.000045  0.000250 -0.000273 -0.000126 -0.000016  0.000130  0.000724
+potential   20.0  1.568451  0.347754  1.149195  1.385046  1.550866  1.710074  2.625419
+w2          20.0  0.052930  0.002951  0.048953  0.050937  0.052374  0.054575  0.061340
+
+== Aggregate pilot output: max_iter=1000 ==
+Saved results_gof_maxiter_test/max_iter=1000/summary/critical_values.csv
+Saved results_gof_maxiter_test/max_iter=1000/summary/size_summary.csv
+Saved results_gof_maxiter_test/max_iter=1000/summary/power_summary.csv
+Saved results_gof_maxiter_test/max_iter=1000/summary/paired_power_differences.csv
+Saved results_gof_maxiter_test/max_iter=1000/summary/runtime_summary.csv
+
+== OT success diagnostics: max_iter=1000 ==
+unique_ot_solves 20
+success_rate 1.0
+median_nit 507.5
+max_nit 787
+median_grad_inf 0.0001999999999999
+max_grad_inf 0.0004
+success  status  message                                             
+True     0       CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH    20
+
+== Calibration pilot: max_iter=2000 ==
+[gof] mode=calibration, null=truncated_gaussian
+           count      mean       std       min       25%       50%       75%       max
+statistic                                                                             
+mmd         20.0  0.000045  0.000250 -0.000273 -0.000126 -0.000016  0.000130  0.000724
+potential   20.0  1.568451  0.347754  1.149195  1.385046  1.550866  1.710074  2.625419
+w2          20.0  0.052930  0.002951  0.048953  0.050937  0.052374  0.054575  0.061340
+
+== Aggregate pilot output: max_iter=2000 ==
+Saved results_gof_maxiter_test/max_iter=2000/summary/critical_values.csv
+Saved results_gof_maxiter_test/max_iter=2000/summary/size_summary.csv
+Saved results_gof_maxiter_test/max_iter=2000/summary/power_summary.csv
+Saved results_gof_maxiter_test/max_iter=2000/summary/paired_power_differences.csv
+Saved results_gof_maxiter_test/max_iter=2000/summary/runtime_summary.csv
+
+== OT success diagnostics: max_iter=2000 ==
+unique_ot_solves 20
+success_rate 1.0
+median_nit 507.5
+max_nit 787
+median_grad_inf 0.0001999999999999
+max_grad_inf 0.0004
+success  status  message                                             
+True     0       CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH    20
+
+== Combined max_iter summary ==
+ max_iter  unique_ot_solves  success_rate  median_nit  max_nit  median_grad_inf  max_grad_inf  median_runtime_seconds  max_runtime_seconds
+      500                20           0.5       490.5      500           0.0002        0.0004               21.099072            22.094507
+     1000                20           1.0       507.5      787           0.0002        0.0004               21.340139            34.507231
+     2000                20           1.0       507.5      787           0.0002        0.0004               20.271028            32.254241
+saved results_gof_maxiter_test/max_iter_summary.csv
+
+GOF max_iter pilot completed successfully.

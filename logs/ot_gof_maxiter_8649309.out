@@ -1,0 +1,31 @@
+Python executable: /burg-archive/home/ss6574/.conda/envs/ot-exp/bin/python
+Python version: 3.11.15 | packaged by conda-forge | (main, Mar  5 2026, 16:45:40) [GCC 14.3.0]
+otexp package: /burg-archive/home/ss6574/L1-rates-ot-potentials/src/otexp/__init__.py
+
+== GOF max_iter pilot configuration ==
+outdir=results_gof_maxiter_test
+max_iters=500 1000 2000
+null=truncated_gaussian
+n=1000, B_cal=20
+n_solve=5000, n_eval_source=5000
+chunk_size=2500, seed=2026
+
+== Calibration pilot: max_iter=500 ==
+[gof] mode=calibration, null=truncated_gaussian
+           count  mean  std  min  25%  50%  75%  max
+statistic                                           
+mmd          0.0   NaN  NaN  NaN  NaN  NaN  NaN  NaN
+potential    0.0   NaN  NaN  NaN  NaN  NaN  NaN  NaN
+w2           0.0   NaN  NaN  NaN  NaN  NaN  NaN  NaN
+
+== Aggregate pilot output: max_iter=500 ==
+Saved results_gof_maxiter_test/max_iter=500/summary/critical_values.csv
+Saved results_gof_maxiter_test/max_iter=500/summary/size_summary.csv
+Saved results_gof_maxiter_test/max_iter=500/summary/power_summary.csv
+Saved results_gof_maxiter_test/max_iter=500/summary/paired_power_differences.csv
+Saved results_gof_maxiter_test/max_iter=500/summary/runtime_summary.csv
+
+== OT success diagnostics: max_iter=500 ==
+unique_ot_solves 20
+success_rate 0.0
+median_nit nan
