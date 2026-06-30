@@ -53,7 +53,7 @@ def solve_weights(X, Y, max_iter=1000, chunk_size=2048, gtol=1e-5, ftol=1e-10):
     res = minimize(
         lambda th: dual_obj_grad(th, X, Y, chunk_size=chunk_size),
         theta0,
-        method="L-BFGS-B",
+        method="L-BFGS",
         jac=True,
         options={
             "maxiter": max_iter,

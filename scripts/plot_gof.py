@@ -52,7 +52,7 @@ def _set_plot_style():
         "axes.labelsize": 18,
         "xtick.labelsize": 14,
         "ytick.labelsize": 14,
-        "legend.fontsize": 8,
+        "legend.fontsize": 11,
     })
 
 
@@ -110,7 +110,7 @@ def plot_gof(outdir="results_gof"):
     for spec_keys, spec_power in grouped_power:
         spec_key_tuple = spec_keys if isinstance(spec_keys, tuple) else (spec_keys,)
         spec_suffix = _spec_suffix(spec_key_tuple, spec_cols)
-        spec_title = _spec_title(spec_key_tuple, spec_cols)
+        # spec_title = _spec_title(spec_key_tuple, spec_cols)
 
         for null_name in GOF_NULLS:
             sub_null = spec_power[spec_power["null_name"] == null_name]
@@ -162,7 +162,7 @@ def plot_gof(outdir="results_gof"):
                         label=label,
                     )
 
-                ax.set_title(ALT_TITLES[alt_type])
+                # ax.set_title(ALT_TITLES[alt_type])
                 ax.set_xlabel(r"$\mathrm{Perturbation\ level}$")
                 ax.set_ylim(-0.02, 1.02)
                 ax.set_yticks(np.linspace(0.0, 1.0, 6))
@@ -181,8 +181,8 @@ def plot_gof(outdir="results_gof"):
                 handletextpad=0.45,
                 labelspacing=0.35,
             )
-            title = NULL_TITLES.get(null_name, null_name.replace("_", " ").title())
-            fig.suptitle(title, fontsize=18)
+            # title = NULL_TITLES.get(null_name, null_name.replace("_", " ").title())
+            # fig.suptitle(title, fontsize=18)
             fig.tight_layout(rect=(0.0, 0.0, 0.88, 1.0))
 
             suffix = f"_{spec_suffix}" if spec_suffix else ""
