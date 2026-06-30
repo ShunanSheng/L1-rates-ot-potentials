@@ -1,0 +1,11 @@
+Calibration stage: null=uniform_ball, chunk=6/10
+Python executable: /burg-archive/home/ss6574/.conda/envs/ot-exp/bin/python
+Python version: 3.11.15 | packaged by conda-forge | (main, Mar  5 2026, 16:45:40) [GCC 14.3.0]
+otexp package: /burg-archive/home/ss6574/L1-rates-ot-potentials/src/otexp/__init__.py
+Running GOF: mode=calibration, null=uniform_ball, alt=location_shift, level=, d=3, n=1000
+[gof] mode=calibration, null=uniform_ball
+           count      mean       std       min       25%       50%       75%       max
+statistic                                                                             
+mmd         50.0 -0.000035  0.000217 -0.000371 -0.000167 -0.000072  0.000076  0.000532
+potential   50.0  0.432087  0.103726  0.255652  0.371878  0.423362  0.501822  0.691810
+w2          50.0  0.013561  0.000740  0.011746  0.013074  0.013529  0.013817  0.015495

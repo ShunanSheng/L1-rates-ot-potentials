@@ -1,0 +1,11 @@
+Calibration stage: null=truncated_gaussian, chunk=7/10
+Python executable: /burg-archive/home/ss6574/.conda/envs/ot-exp/bin/python
+Python version: 3.11.15 | packaged by conda-forge | (main, Mar  5 2026, 16:45:40) [GCC 14.3.0]
+otexp package: /burg-archive/home/ss6574/L1-rates-ot-potentials/src/otexp/__init__.py
+Running GOF: mode=calibration, null=truncated_gaussian, alt=location_shift, level=, d=3, n=1000
+[gof] mode=calibration, null=truncated_gaussian
+           count      mean       std       min       25%       50%       75%       max
+statistic                                                                             
+mmd         50.0 -0.000052  0.000251 -0.000348 -0.000218 -0.000130  0.000038  0.000724
+potential   50.0  1.413621  0.354595  0.896917  1.155962  1.385154  1.530249  2.625419
+w2          50.0  0.052264  0.002939  0.047921  0.050404  0.051871  0.053561  0.062486

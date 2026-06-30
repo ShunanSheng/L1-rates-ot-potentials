@@ -1,0 +1,11 @@
+Power stage: null=uniform_ball, alt=scale, level=1.075, chunk=9/10
+Python executable: /burg-archive/home/ss6574/.conda/envs/ot-exp/bin/python
+Python version: 3.11.15 | packaged by conda-forge | (main, Mar  5 2026, 16:45:40) [GCC 14.3.0]
+otexp package: /burg-archive/home/ss6574/L1-rates-ot-potentials/src/otexp/__init__.py
+Running GOF: mode=power, null=uniform_ball, alt=scale, level=1.075, d=3, n=1000
+[gof] mode=power, null=uniform_ball
+[gof] power alt=scale, level=1.075
+statistic
+mmd          1.00
+potential    0.18
+w2           1.00

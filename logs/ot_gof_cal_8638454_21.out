@@ -1,0 +1,11 @@
+Calibration stage: null=truncated_elliptical_t, chunk=1/10
+Python executable: /burg-archive/home/ss6574/.conda/envs/ot-exp/bin/python
+Python version: 3.11.15 | packaged by conda-forge | (main, Mar  5 2026, 16:45:40) [GCC 14.3.0]
+otexp package: /burg-archive/home/ss6574/L1-rates-ot-potentials/src/otexp/__init__.py
+Running GOF: mode=calibration, null=truncated_elliptical_t, alt=location_shift, level=, d=3, n=1000
+[gof] mode=calibration, null=truncated_elliptical_t
+           count      mean       std       min       25%       50%       75%       max
+statistic                                                                             
+mmd         50.0  0.000023  0.000288 -0.000329 -0.000167 -0.000058  0.000129  0.000821
+potential   50.0  1.912232  0.841110  0.757519  1.218261  1.723578  2.327103  3.965915
+w2          50.0  0.055366  0.005347  0.046314  0.051903  0.054253  0.056688  0.070198
