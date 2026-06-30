@@ -4,6 +4,7 @@
 #
 # Override any GOF_* value at submission time, for example:
 #   sbatch --export=ALL,GOF_MODE=power,GOF_NULL=uniform_ball,GOF_ALT=location_shift,GOF_LEVEL=0.05,GOF_CHUNK_ID=0,GOF_NUM_CHUNKS=10 jobs/slurm_gof.sh
+#   sbatch --export=ALL,GOF_OVERWRITE=1,GOF_MAX_ITER=2000 jobs/slurm_gof_2_calibration_array.sh
 #
 #SBATCH --account=stats
 #SBATCH --job-name=ot_gof
@@ -55,13 +56,14 @@ GOF_CHUNK_SIZE="${GOF_CHUNK_SIZE:-2500}"
 GOF_CHUNK_ID="${GOF_CHUNK_ID:-}"
 GOF_NUM_CHUNKS="${GOF_NUM_CHUNKS:-}"
 GOF_OUTDIR="${GOF_OUTDIR:-results_gof}"
+GOF_OVERWRITE="${GOF_OVERWRITE:-0}"
 
 echo "Python executable: $PYTHON"
 "$PYTHON" -c "import sys; print('Python version:', sys.version)"
 "$PYTHON" -m pip show otexp >/dev/null
 "$PYTHON" -c "import otexp; print('otexp package:', otexp.__file__)"
 
-echo "Running GOF: mode=${GOF_MODE}, null=${GOF_NULL}, alt=${GOF_ALT}, level=${GOF_LEVEL}, d=${GOF_D}, n=${GOF_N}"
+echo "Running GOF: mode=${GOF_MODE}, null=${GOF_NULL}, alt=${GOF_ALT}, level=${GOF_LEVEL}, d=${GOF_D}, n=${GOF_N}, max_iter=${GOF_MAX_ITER}, overwrite=${GOF_OVERWRITE}"
 
 EXTRA_ARGS=()
 if [ -n "$GOF_LEVEL" ]; then
@@ -72,6 +74,9 @@ if [ -n "$GOF_CHUNK_ID" ]; then
 fi
 if [ -n "$GOF_NUM_CHUNKS" ]; then
   EXTRA_ARGS+=(--num_chunks "$GOF_NUM_CHUNKS")
+fi
+if [ "$GOF_OVERWRITE" = "1" ] || [ "$GOF_OVERWRITE" = "true" ] || [ "$GOF_OVERWRITE" = "TRUE" ]; then
+  EXTRA_ARGS+=(--overwrite)
 fi
 
 "$PYTHON" scripts/run_gof.py \

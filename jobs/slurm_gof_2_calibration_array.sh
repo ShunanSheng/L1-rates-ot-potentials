@@ -11,6 +11,9 @@
 # If changing GOF_NUM_CHUNKS, also override the Slurm array range:
 #   sbatch --array=0-14 --export=ALL,GOF_NUM_CHUNKS=5 jobs/slurm_gof_2_calibration_array.sh
 #
+# To intentionally replace existing calibration chunks, set GOF_OVERWRITE=1:
+#   sbatch --export=ALL,GOF_MAX_ITER=2000,GOF_OVERWRITE=1 jobs/slurm_gof_2_calibration_array.sh
+#
 #SBATCH --account=stats
 #SBATCH --job-name=ot_gof_cal
 #SBATCH --output=logs/ot_gof_cal_%A_%a.out
