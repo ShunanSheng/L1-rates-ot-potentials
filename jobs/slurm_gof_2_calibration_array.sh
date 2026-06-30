@@ -29,6 +29,7 @@ cd "${SLURM_SUBMIT_DIR}"
 
 NULLS=(uniform_ball truncated_gaussian truncated_elliptical_t)
 GOF_NUM_CHUNKS="${GOF_NUM_CHUNKS:-10}"
+GOF_OVERWRITE="${GOF_OVERWRITE:-0}"
 TASK_ID="${SLURM_ARRAY_TASK_ID:-0}"
 
 NULL_INDEX=$((TASK_ID / GOF_NUM_CHUNKS))
@@ -43,6 +44,7 @@ export GOF_MODE="calibration"
 export GOF_NULL="${NULLS[$NULL_INDEX]}"
 export GOF_CHUNK_ID="$CHUNK_ID"
 export GOF_NUM_CHUNKS
+export GOF_OVERWRITE
 
-echo "Calibration stage: null=${GOF_NULL}, chunk=${GOF_CHUNK_ID}/${GOF_NUM_CHUNKS}"
+echo "Calibration stage: null=${GOF_NULL}, chunk=${GOF_CHUNK_ID}/${GOF_NUM_CHUNKS}, overwrite=${GOF_OVERWRITE}"
 bash jobs/slurm_gof.sh

@@ -30,6 +30,7 @@ SCALE_LEVELS=(1.025 1.05 1.075 1.10 1.15 1.20)
 MIXTURE_LEVELS=(0.01 0.02 0.05 0.10 0.15 0.20)
 
 GOF_NUM_CHUNKS="${GOF_NUM_CHUNKS:-10}"
+GOF_OVERWRITE="${GOF_OVERWRITE:-0}"
 TASK_ID="${SLURM_ARRAY_TASK_ID:-0}"
 
 CHUNK_ID=$((TASK_ID % GOF_NUM_CHUNKS))
@@ -59,6 +60,7 @@ export GOF_ALT="$ALT"
 export GOF_LEVEL="$LEVEL"
 export GOF_CHUNK_ID="$CHUNK_ID"
 export GOF_NUM_CHUNKS
+export GOF_OVERWRITE
 
-echo "Power stage: null=${GOF_NULL}, alt=${GOF_ALT}, level=${GOF_LEVEL}, chunk=${GOF_CHUNK_ID}/${GOF_NUM_CHUNKS}"
+echo "Power stage: null=${GOF_NULL}, alt=${GOF_ALT}, level=${GOF_LEVEL}, chunk=${GOF_CHUNK_ID}/${GOF_NUM_CHUNKS}, overwrite=${GOF_OVERWRITE}"
 bash jobs/slurm_gof.sh
