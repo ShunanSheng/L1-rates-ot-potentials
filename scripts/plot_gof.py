@@ -174,8 +174,7 @@ def plot_gof(outdir="results_gof"):
             axes[-1].legend(
                 handles,
                 labels,
-                loc="center left",
-                bbox_to_anchor=(1.01, 0.5),
+                loc="lower right",
                 frameon=False,
                 borderaxespad=0.0,
                 handlelength=1.4,
@@ -184,13 +183,13 @@ def plot_gof(outdir="results_gof"):
             )
             # title = NULL_TITLES.get(null_name, null_name.replace("_", " ").title())
             # fig.suptitle(title, fontsize=18)
-            fig.tight_layout(rect=(0.0, 0.0, 0.88, 1.0))
+            fig.tight_layout()
 
             suffix = f"_{spec_suffix}" if spec_suffix else ""
             pdf_path = figdir / f"power_{null_name}_1x3{suffix}.pdf"
             png_path = figdir / f"power_{null_name}_1x3{suffix}.png"
-            fig.savefig(pdf_path, dpi=200, bbox_inches="tight", pad_inches=0.04)
-            fig.savefig(png_path, dpi=200, bbox_inches="tight", pad_inches=0.04)
+            fig.savefig(pdf_path, dpi=200)
+            fig.savefig(png_path, dpi=200)
             plt.close(fig)
             print(f"Saved {pdf_path}")
             print(f"Saved {png_path}")

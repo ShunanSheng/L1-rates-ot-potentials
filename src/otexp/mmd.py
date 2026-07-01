@@ -1,5 +1,7 @@
 import numpy as np
 
+DEFAULT_MMD_SCALES = (0.5, 1.0, 2.0)
+
 
 def _squared_distance_block(X, Y):
     x_norm = np.sum(X * X, axis=1)[:, None]
@@ -43,7 +45,7 @@ def gaussian_multiscale_kernel_sum(
     X,
     Y,
     sigma0,
-    scales=(0.5, 1.0, 2.0),
+    scales=DEFAULT_MMD_SCALES,
     chunk_size=2048,
 ):
     """

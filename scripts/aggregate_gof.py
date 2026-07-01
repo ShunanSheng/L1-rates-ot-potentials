@@ -39,13 +39,22 @@ def _critical_values(calibration, alpha):
         if len(values):
             idx = int(np.ceil((1.0 - alpha) * len(values))) - 1
             critical_value = float(values[np.clip(idx, 0, len(values) - 1)])
+            calibration_mean_value = float(np.mean(values))
+            calibration_std_value = float(np.std(values, ddof=1)) if len(values) >= 2 else 0.0
+            calibration_median_value = float(np.median(values))
         else:
             critical_value = np.nan
+            calibration_mean_value = np.nan
+            calibration_std_value = np.nan
+            calibration_median_value = np.nan
         row = {
             "null_name": key_map["null_name"],
             "statistic": key_map["statistic"],
             "alpha": alpha,
             "critical_value": critical_value,
+            "calibration_mean_value": calibration_mean_value,
+            "calibration_std_value": calibration_std_value,
+            "calibration_median_value": calibration_median_value,
             "calibration_B": int(len(values)),
         }
         row.update({col: key_map[col] for col in _present_spec_cols(calibration)})

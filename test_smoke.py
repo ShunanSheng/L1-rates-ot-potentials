@@ -50,6 +50,9 @@ def main():
         assert "X_eval" in saved.files
         assert "Y_mmd" not in saved.files
         assert metadata["mmd_reference"] == "X_eval"
+        assert metadata["mmd_bandwidth"] == "median_heuristic"
+        assert np.isfinite(metadata["sigma0"])
+        assert metadata["sigma0"] > 0.0
         assert metadata["n"] == config["n"]
         assert metadata["n_eval_source"] == config["n_eval_source"]
         assert metadata["n_solve"] == config["n_solve"]
@@ -71,6 +74,8 @@ def main():
         print(f"  spec:           {spec}")
         print(f"  reference keys: {sorted(saved.files)}")
         print(f"  mmd_reference:  {metadata['mmd_reference']}")
+        print(f"  mmd_bandwidth:  {metadata['mmd_bandwidth']}")
+        print(f"  mmd_sigma0:     {metadata['sigma0']:.12g}")
         print("smoke statistics")
         print(f"  potential: {stats['potential']:.12g}")
         print(f"  w2:        {stats['w2']:.12g}")

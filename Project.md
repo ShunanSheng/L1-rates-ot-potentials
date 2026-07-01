@@ -129,8 +129,9 @@ mmd:
 The GOF workflow is:
 
 1. Prepare and save null-specific reference objects: OT solve cloud, OT
-   evaluation cloud, MMD bandwidth, and MMD reference-reference term. MMD uses
-   the same `X_eval` cloud as W2 and the proposed potential statistic.
+   evaluation cloud, MMD median-heuristic bandwidth, and MMD
+   reference-reference term. MMD uses the same `X_eval` cloud as W2 and the
+   proposed potential statistic.
 2. Draw `B_cal` null samples to calibrate empirical critical values for
    `potential`, `w2`, and `mmd` under each null.
 3. Draw `N_size` fresh null samples to estimate empirical size under each null.
@@ -366,6 +367,11 @@ The kernel is:
 ```text
 k(x,y) = (1/3) sum_{b in {1/2,1,2}} exp(-||x-y||^2 / (2 (b sigma0)^2)).
 ```
+
+For the GOF experiment, `sigma0` is the median pairwise Euclidean distance
+within the null reference cloud `X_eval`. Thus each null distribution uses a
+null-specific median-heuristic base scale, with multiscale factors
+`{0.5, 1.0, 2.0}`.
 
 Use the unbiased MMD estimator:
 

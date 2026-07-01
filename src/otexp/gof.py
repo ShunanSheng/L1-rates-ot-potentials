@@ -165,6 +165,7 @@ def save_gof_references(null_name, references, config):
         "n_solve": int(config["n_solve"]),
         "n_eval_source": int(config["n_eval_source"]),
         "mmd_reference": "X_eval",
+        "mmd_bandwidth": "median_heuristic",
         "seed": int(config["seed"]),
         "use_qmc_source": bool(config.get("use_qmc_source", True)),
         "sigma0": float(references["sigma0"]),
