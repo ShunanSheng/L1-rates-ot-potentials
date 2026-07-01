@@ -1,0 +1,11 @@
+Power stage: null=uniform_ball, alt=mixture_contamination, level=0.01, chunk=3/10
+Python executable: /burg-archive/home/ss6574/.conda/envs/ot-exp/bin/python
+Python version: 3.11.15 | packaged by conda-forge | (main, Mar  5 2026, 16:45:40) [GCC 14.3.0]
+otexp package: /burg-archive/home/ss6574/L1-rates-ot-potentials/src/otexp/__init__.py
+Running GOF: mode=power, null=uniform_ball, alt=mixture_contamination, level=0.01, d=3, n=1000, max_iter=2000, overwrite=1
+[gof] mode=power, null=uniform_ball
+[gof] power alt=mixture_contamination, level=0.01
+statistic
+mmd          0.07
+potential    0.05
+w2           0.09

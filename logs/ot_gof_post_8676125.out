@@ -1,0 +1,16 @@
+Python executable: /burg-archive/home/ss6574/.conda/envs/ot-exp/bin/python
+Python version: 3.11.15 | packaged by conda-forge | (main, Mar  5 2026, 16:45:40) [GCC 14.3.0]
+otexp package: /burg-archive/home/ss6574/L1-rates-ot-potentials/src/otexp/__init__.py
+Aggregating GOF outputs from results_gof with alpha=0.05
+Saved results_gof/summary/critical_values.csv
+Saved results_gof/summary/size_summary.csv
+Saved results_gof/summary/power_summary.csv
+Saved results_gof/summary/paired_power_differences.csv
+Saved results_gof/summary/runtime_summary.csv
+Power summary found. Plotting GOF power figures into results_gof/figs
+Saved results_gof/figs/power_uniform_ball_1x3_n=1000_n_eval_source=5000_n_solve=5000_base_seed=2026.pdf
+Saved results_gof/figs/power_uniform_ball_1x3_n=1000_n_eval_source=5000_n_solve=5000_base_seed=2026.png
+Saved results_gof/figs/power_truncated_gaussian_1x3_n=1000_n_eval_source=5000_n_solve=5000_base_seed=2026.pdf
+Saved results_gof/figs/power_truncated_gaussian_1x3_n=1000_n_eval_source=5000_n_solve=5000_base_seed=2026.png
+Saved results_gof/figs/power_truncated_elliptical_t_1x3_n=1000_n_eval_source=5000_n_solve=5000_base_seed=2026.pdf
+Saved results_gof/figs/power_truncated_elliptical_t_1x3_n=1000_n_eval_source=5000_n_solve=5000_base_seed=2026.png
