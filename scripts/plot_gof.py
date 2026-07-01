@@ -163,7 +163,8 @@ def plot_gof(outdir="results_gof"):
                     )
 
                 # ax.set_title(ALT_TITLES[alt_type])
-                ax.set_xlabel(r"$\mathrm{Perturbation\ level}$")
+                # ax.set_xlabel(r"$\mathrm{Perturbation\ level}$")
+                ax.set_xlabel(ALT_TITLES[alt_type])
                 ax.set_ylim(-0.02, 1.02)
                 ax.set_yticks(np.linspace(0.0, 1.0, 6))
                 ax.grid(True, color="0.88", linewidth=0.8)
