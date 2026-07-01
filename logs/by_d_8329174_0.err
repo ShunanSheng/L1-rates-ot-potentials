@@ -1,4 +1,0 @@
-Traceback (most recent call last):
-  File "/burg-archive/home/ss6574/L1-rates-ot-potentials/scripts/run_experiment.py", line 4, in <module>
-    from otexp.experiment import run_ball_experiment
-ModuleNotFoundError: No module named 'otexp'
