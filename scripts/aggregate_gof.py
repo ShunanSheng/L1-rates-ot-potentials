@@ -117,6 +117,37 @@ def _rejection_summary(df, quantity):
     return pd.DataFrame(rows)
 
 
+def _add_signal_to_noise(summary, critical_values):
+    if summary.empty:
+        return summary
+
+    summary = summary.drop(
+        columns=["calibration_mean_value", "calibration_std_value", "signal_to_noise_ratio"],
+        errors="ignore",
+    )
+    if critical_values.empty:
+        summary = summary.copy()
+        summary["calibration_mean_value"] = np.nan
+        summary["calibration_std_value"] = np.nan
+        summary["signal_to_noise_ratio"] = np.nan
+        return summary
+
+    merge_cols = [
+        col
+        for col in [*_present_spec_cols(summary), "null_name", "statistic"]
+        if col in critical_values.columns
+    ]
+    calibration_cols = [*merge_cols, "calibration_mean_value", "calibration_std_value"]
+    merged = summary.merge(
+        critical_values[calibration_cols],
+        on=merge_cols,
+        how="left",
+    )
+    denom = merged["calibration_std_value"].replace(0.0, np.nan)
+    merged["signal_to_noise_ratio"] = (merged["mean_value"] - merged["calibration_mean_value"]) / denom
+    return merged
+
+
 def _paired_power_differences(power):
     rows = []
     if power.empty:
@@ -189,6 +220,7 @@ def aggregate_gof(outdir="results_gof", alpha=0.05):
 
     size_summary = _rejection_summary(size, "empirical size")
     power_summary = _rejection_summary(power, "empirical power")
+    power_summary = _add_signal_to_noise(power_summary, critical_values)
     paired = _paired_power_differences(power)
     all_raw = pd.concat([df for df in (calibration, size, power) if not df.empty], ignore_index=True) if any(
         not df.empty for df in (calibration, size, power)
