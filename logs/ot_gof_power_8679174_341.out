@@ -1,0 +1,11 @@
+Power stage: null=truncated_gaussian, alt=mixture_contamination, level=0.15, chunk=1/10, overwrite=0
+Python executable: /burg-archive/home/ss6574/.conda/envs/ot-exp/bin/python
+Python version: 3.11.15 | packaged by conda-forge | (main, Mar  5 2026, 16:45:40) [GCC 14.3.0]
+otexp package: /burg-archive/home/ss6574/L1-rates-ot-potentials/src/otexp/__init__.py
+Running GOF: mode=power, null=truncated_gaussian, alt=mixture_contamination, level=0.15, d=3, n=200, max_iter=1000, overwrite=0
+[gof] mode=power, null=truncated_gaussian
+[gof] power alt=mixture_contamination, level=0.15
+statistic
+mmd          0.83
+potential    0.48
+w2           0.85

@@ -1,5 +1,0 @@
-Python executable: /burg-archive/home/ss6574/.conda/envs/ot-exp/bin/python
-Python version: 3.11.15 | packaged by conda-forge | (main, Mar  5 2026, 16:45:40) [GCC 14.3.0]
-otexp package: /burg-archive/home/ss6574/L1-rates-ot-potentials/src/otexp/__init__.py
-Running pair task=4: d=2, n=10000, B=100
-[resume] d=2, n=10000, b=[0, 100): found 5/100 completed trials
